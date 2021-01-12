@@ -1,0 +1,16 @@
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\SAMBHS.Common.BE.dll.config
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\SAMBHS.Common.BE.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\SAMBHS.Common.BE.pdb
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\itextsharp.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\Microsoft.CSharp.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\System.Data.DataSetExtensions.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\System.Data.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\System.Data.Entity.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\System.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\System.Runtime.Serialization.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\System.Xml.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\bin\Debug\System.Xml.Linq.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\obj\Debug\SAMBHS.Common.BE.csprojResolveAssemblyReference.cache
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\obj\Debug\SAMBHS.Common.BE.dll.licenses
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\obj\Debug\SAMBHS.Common.BE.dll
+D:\Projects\NetConta_CSM\Components\Common\BusinessEntity\SAMBHS.Common.BE\obj\Debug\SAMBHS.Common.BE.pdb
