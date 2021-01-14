@@ -26,6 +26,12 @@ using SAMBHS.Windows.WinClient.UI.Mantenimientos;
 using System.Diagnostics;
 using SAMBHS.Venta.BL;
 using ConexionSigesoft = SAMBHS.Windows.SigesoftIntegration.UI.Reports.ConexionSigesoft;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
+using System.Configuration;
+using System.Diagnostics;
+using Microsoft.Office.Core;
+using Microsoft.Office.Interop.Excel;
 
 namespace SAMBHS.Windows.WinClient.UI.Procesos
 {
@@ -43,7 +49,7 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
         private string _protocolId;
         private int _masterServiceId;
         private int? _medicoTratanteId;
-
+        List<AgendaDto> _AgendaDtoList = new List<AgendaDto>();
 
         public frmBandejaAgenda(string value)
         {
@@ -90,7 +96,7 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
 
             var objData = AgendaBl.ObtenerListaAgendados(oFiltros);
             grdDataCalendar.DataSource = objData;
-
+            _AgendaDtoList = objData;
             lblRecordCountCalendar.Text = string.Format("Se encontraron {0} registros.", objData.Count());
 
         }
@@ -809,7 +815,7 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
 
         private void grdDataCalendar_MouseDown(object sender, MouseEventArgs e)
         {
-            var point = new Point(e.X, e.Y);
+            var point = new System.Drawing.Point(e.X, e.Y);
             var uiElement = ((Infragistics.Win.UltraWinGrid.UltraGridBase)sender).DisplayLayout.UIElement.ElementFromPoint(point);
 
             if (uiElement == null || uiElement.Parent == null) return;
@@ -899,7 +905,7 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
 
         private void ugComponentes_MouseDown(object sender, MouseEventArgs e)
         {
-            Point point = new System.Drawing.Point(e.X, e.Y);
+            System.Drawing.Point point = new System.Drawing.Point(e.X, e.Y);
             Infragistics.Win.UIElement uiElement = ((Infragistics.Win.UltraWinGrid.UltraGridBase)sender).DisplayLayout.UIElement.ElementFromPoint(point);
 
             if (uiElement == null || uiElement.Parent == null)
@@ -1260,7 +1266,772 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
             frm.ShowDialog();
         }
 
+        //private void btnExportarExcel_Click(object sender, EventArgs e)
+        //{
+        //    OperationResult objOperationResult = new OperationResult();
 
+        //    //string liquidacionID = null;
+        //    //string serviceID;
+        //    //string protocolId;
+        //    //if (tabControl1.SelectedTab.Name == "tpESO")
+        //    //{
+        //    //               
+        //    //}
+        //    //else if (tabControl1.SelectedTab.Name == "tpEmpresa")
+        //    //{
+        //    //    
+        //    //}
+        //    //string ruta = Common.Utils.GetApplicationConfigValue("rutaLiquidacion").ToString();
+        //    string ruta = GetApplicationConfigValue("rutaEgresos").ToString();
+
+        //    //var lista = _serviceBL.GetListaLiquidacion(ref _objOperationResult, liquidacion);
+
+        //    BackgroundWorker bw = sender as BackgroundWorker;
+
+        //    Excel.Application excel = new Excel.Application();
+        //    Excel._Workbook libro = null;
+        //    Excel._Worksheet hoja = null;
+        //    Excel.Range rango = null;
+
+        //    try
+        //    {
+        //        using (new LoadingClass.PleaseWait(this.Location, "Generando..."))
+        //        {
+        //            //creamos un libro nuevo y la hoja con la que vamos a trabajar
+        //            libro = (Excel._Workbook)excel.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
+
+        //            hoja = (Excel._Worksheet)libro.Worksheets.Add();
+        //            hoja.Application.ActiveWindow.DisplayGridlines = false;
+        //            hoja.Name = "LIQUIDACION N";
+        //            ((Excel.Worksheet)excel.ActiveWorkbook.Sheets["Hoja1"]).Delete();   //Borro hoja que crea en el libro por defecto
+
+        //            //DatosEmpresa
+        //            rango = (Microsoft.Office.Interop.Excel.Range)hoja.get_Range("B2", "D5");
+        //            rango.Select();
+        //            rango.RowHeight = 25;
+        //            hoja.get_Range("B2", "D5").Merge(true);
+
+        //            Microsoft.Office.Interop.Excel.Pictures oPictures = (Microsoft.Office.Interop.Excel.Pictures)hoja.Pictures(System.Reflection.Missing.Value);
+
+        //            hoja.Shapes.AddPicture(@"C:\Program Files (x86)\NetMedical\Banner\banner.jpg",
+        //                Microsoft.Office.Core.MsoTriState.msoFalse,
+        //                Microsoft.Office.Core.MsoTriState.msoCTrue,
+        //                float.Parse(rango.Left.ToString()),
+        //                float.Parse(rango.Top.ToString()),
+        //                200,
+        //                90);
+
+        //            montaCabeceras(3, ref hoja, "");
+
+        //            //DatosDinamicos
+        //            int fila = 11;
+        //            int count = 1;
+        //            int i = 0;
+        //            decimal sumatipoExm = 0;
+        //            decimal sumatipoExm_1 = 0;
+        //            decimal igvPerson = 0;
+        //            decimal _igvPerson = 0;
+        //            decimal subTotalPerson = 0;
+        //            decimal _subTotalPerson = 0;
+        //            decimal totalFinal = 0;
+        //            decimal totalFinal_1 = 0;
+        //            //foreach (var lista1 in lista)
+        //            //{
+        //            //    //Asignamos los datos a las celdas de la fila
+        //            //    hoja.Cells[fila + i, 2] = "TIPO EXAMEN: " + lista1.Esotype;
+        //            //    string x1 = "B" + (fila + i).ToString();
+        //            //    string y1 = "L" + (fila + i).ToString();
+        //            //    rango = hoja.Range[x1, y1];
+        //            //    rango.Merge(true);
+        //            //    rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+        //            //    rango.Interior.Color = Color.Gray;
+        //            //    rango.Font.Size = 14;
+        //            //    rango.RowHeight = 30;
+        //            //    rango.Font.Bold = true;
+        //            //    i++;
+
+        //            //    hoja.Cells[fila + i, 2] = "N°";
+        //            //    hoja.Cells[fila + i, 3] = "PACIENTE ";
+        //            //    hoja.Cells[fila + i, 4] = "EDAD ";
+        //            //    hoja.Cells[fila + i, 5] = "F. EXAMEN ";
+        //            //    hoja.Cells[fila + i, 6] = "DNI ";
+        //            //    hoja.Cells[fila + i, 7] = "CARGO ";
+        //            //    hoja.Cells[fila + i, 8] = "PERFIL ";
+        //            //    hoja.Cells[fila + i, 9] = "IGV ";
+        //            //    hoja.Cells[fila + i, 10] = "SUB TOTAL ";
+        //            //    hoja.Cells[fila + i, 11] = "TOTAL ";
+        //            //    hoja.Cells[fila + i, 12] = "REF./OBSE. ";
+        //            //    string x2 = "B" + (fila + i).ToString();
+        //            //    string y2 = "L" + (fila + i).ToString();
+        //            //    rango = hoja.Range[x2, y2];
+        //            //    rango.Borders.LineStyle = Excel.XlLineStyle.xlDash;
+        //            //    rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //            //    rango.RowHeight = 25;
+        //            //    rango.Font.Bold = true;
+        //            //    i++;
+        //            //    foreach (var item in lista1.Detalle)
+        //            //    {
+        //            //        hoja.Cells[fila + i, 2] = count + ".";
+        //            //        hoja.Cells[fila + i, 3] = item.Trabajador;
+        //            //        hoja.Cells[fila + i, 4] = item.Edad;
+        //            //        DateTime fecha = item.FechaExamen.Value.Date;
+        //            //        hoja.Cells[fila + i, 5] = fecha;
+        //            //        hoja.Cells[fila + i, 6] = item.NroDocumemto;
+        //            //        hoja.Cells[fila + i, 7] = item.Cargo;
+        //            //        hoja.Cells[fila + i, 8] = item.Perfil;
+        //            //        decimal _SubTotal = (decimal)item.Precio / (decimal)1.18;
+        //            //        _SubTotal = _SubTotal + (decimal)0.0000000000000000000000000000001;
+        //            //        _SubTotal = decimal.Round(_SubTotal, 2);
+        //            //        decimal _igv = _SubTotal * (decimal)0.18;
+        //            //        _igv = _igv + (decimal)0.00000000000000000000000000001;
+        //            //        _igv = decimal.Round(_igv, 2);
+        //            //        hoja.Cells[fila + i, 9] = _igv;
+        //            //        hoja.Cells[fila + i, 10] = _SubTotal;
+        //            //        decimal Precio = (decimal)item.Precio;
+        //            //        Precio = Precio + (decimal)0.0000000000000000000001;
+        //            //        Precio = decimal.Round(Precio, 2);
+        //            //        string[] _Pcadena = Precio.ToString().Split('.');
+        //            //        if (_Pcadena.Count() > 1)
+        //            //        {
+        //            //            hoja.Cells[fila + i, 11] = Precio;
+        //            //        }
+        //            //        else
+        //            //        {
+        //            //            hoja.Cells[fila + i, 11] = Precio.ToString() + ".00";
+        //            //        }
+        //            //        hoja.Cells[fila + i, 12] = item.CCosto;
+        //            //        string x_1 = "B" + (fila + i).ToString();
+        //            //        string y_1 = "H" + (fila + i).ToString();
+        //            //        hoja.get_Range(x_1, y_1).RowHeight = 25;
+        //            //        count++;
+        //            //        sumatipoExm += (decimal)item.Precio;
+        //            //        igvPerson += (decimal)_igv;
+        //            //        subTotalPerson += (decimal)_SubTotal;
+        //            //        i++;
+        //            //    }
+        //            //    sumatipoExm_1 = decimal.Round(sumatipoExm, 2);
+        //            //    _igvPerson = decimal.Round(igvPerson, 2);
+        //            //    _subTotalPerson = decimal.Round(subTotalPerson, 2);
+
+        //            //    hoja.Cells[fila + i, 2] = "TOTAL EXAMEN: " + lista1.Esotype + " = ";
+        //            //    string x3 = "B" + (fila + i).ToString();
+        //            //    string y3 = "H" + (fila + i).ToString();
+        //            //    rango = hoja.Range[x3, y3];
+        //            //    rango.Merge(true);
+        //            //    rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+        //            //    rango.Font.Bold = true;
+        //            //    rango.Font.Size = 14;
+        //            //    hoja.Cells[fila + i, 9] = _igvPerson;
+        //            //    hoja.Cells[fila + i, 10] = _subTotalPerson;
+        //            //    hoja.Cells[fila + i, 11] = sumatipoExm_1;
+
+        //            //    i++;
+
+        //            //    sumatipoExm = 0;
+        //            //    igvPerson = 0;
+        //            //    subTotalPerson = 0;
+        //            //    totalFinal += (decimal)sumatipoExm_1;
+
+        //            //}
+
+        //            totalFinal_1 = decimal.Round(totalFinal, 2);
+        //            decimal subTotalFinal = decimal.Round(totalFinal_1 / (decimal)1.18, 2);
+        //            decimal IGV = decimal.Round(subTotalFinal * (decimal)0.18, 2);
+
+        //            hoja.Cells[fila + i, 2] = "SUB TOTAL = ";
+        //            string x4 = "B" + (fila + i).ToString();
+        //            string y4 = "H" + (fila + i).ToString();
+        //            rango = hoja.Range[x4, y4];
+        //            rango.Merge(true);
+        //            rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+        //            rango.Font.Bold = true;
+        //            rango.Font.Size = 13;
+        //            hoja.Cells[fila + i, 11] = subTotalFinal;
+
+        //            i++;
+        //            hoja.Cells[fila + i, 2] = "IGV = ";
+        //            string x5 = "B" + (fila + i).ToString();
+        //            string y5 = "H" + (fila + i).ToString();
+        //            rango = hoja.Range[x5, y5];
+        //            rango.Merge(true);
+        //            rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+        //            rango.Font.Bold = true;
+        //            rango.Font.Size = 13;
+        //            hoja.Cells[fila + i, 11] = IGV;
+
+        //            i++;
+        //            hoja.Cells[fila + i, 2] = "TOTAL LIQUIDACIÓN = ";
+        //            string x6 = "B" + (fila + i).ToString();
+        //            string y6 = "H" + (fila + i).ToString();
+        //            rango = hoja.Range[x6, y6];
+        //            rango.Merge(true);
+        //            rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+        //            rango.Font.Bold = true;
+        //            rango.Font.Size = 13;
+        //            hoja.Cells[fila + i, 11] = totalFinal_1;
+
+        //            i += 5;
+
+        //            string x7 = "B" + (fila + i).ToString();
+        //            string y7 = "L" + (fila + i).ToString();
+        //            rango = (Microsoft.Office.Interop.Excel.Range)hoja.get_Range(x7, y7);
+        //            rango.Select();
+        //            hoja.get_Range(x7, y7).Merge(true);
+
+        //            Microsoft.Office.Interop.Excel.Pictures oPictures2 = (Microsoft.Office.Interop.Excel.Pictures)hoja.Pictures(System.Reflection.Missing.Value);
+
+        //            hoja.Shapes.AddPicture(@"C:\Program Files (x86)\NetMedical\Banner\banner2.jpg",
+        //                Microsoft.Office.Core.MsoTriState.msoFalse,
+        //                Microsoft.Office.Core.MsoTriState.msoCTrue,
+        //                float.Parse(rango.Left.ToString()),
+        //                float.Parse(rango.Top.ToString()),
+        //                float.Parse(rango.Width.ToString()),
+        //                80);
+
+        //            libro.Saved = true;
+
+        //            libro.SaveAs(ruta + @"\" + "Liquidacion N.xlsx");
+
+        //            //bw.WorkerReportsProgress = true;
+        //            //bw.ReportProgress(100, ti);
+
+        //            libro.Close();
+        //            releaseObject(libro);
+
+        //            excel.UserControl = false;
+        //            excel.Quit();
+        //            releaseObject(excel);
+        //        }
+        //        Process.Start(ruta + @"\" + "Liquidacion N.xlsx");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, "Error en creación/actualización de la Liquidación N° " + "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        using (new LoadingClass.PleaseWait(this.Location, "Generando..."))
+        //        {
+        //            libro.Saved = true;
+        //            libro.SaveAs(ruta + @"\" + "Liquidacion N fail.xlsx");
+
+        //            libro.Close();
+        //            releaseObject(libro);
+
+        //            excel.UserControl = false;
+        //            excel.Quit();
+        //            releaseObject(excel);
+        //        }
+        //        Process.Start(ruta + @"\" + "Liquidacion N fail.xlsx");
+        //    }
+        //}
+
+        //private void montaCabeceras(int fila, ref Excel._Worksheet hoja, string _liquidacion)
+        //{
+
+        //    //string liquidacionID = null;
+
+        //    //if (tabControl1.SelectedTab.Name == "tpESO")
+        //    //{
+        //    //    liquidacionID = grdData.Selected.Rows[0].Cells["v_NroLiquidacion"].Value.ToString();
+        //    //}
+        //    //else if (tabControl1.SelectedTab.Name == "tpEmpresa")
+        //    //{
+        //    //    liquidacionID = grdEmpresa.Selected.Rows[0].Cells["v_NroLiquidacion"].Value.ToString();
+        //    //}
+        //    var MedicalCenter = new ServiceBL().GetInfoMedicalCenter();
+        //    //var traerEmpresa = new ServiceBL().ListaLiquidacionById(ref _objOperationResult, _liquidacion);
+        //    string idEmpresa = "1234";
+        //    var obtenerInformacionEmpresas = new ServiceBL().GetInfoMedicalCenter();
+        //    try
+        //    {
+        //        Excel.Range rango;
+
+
+        //        //** TITULO DEL LIBRO **
+        //        ////hoja.Cells[1, 2] = MedicalCenter.b_Image;
+        //        //hoja.get_Range("B1", "C1");
+
+        //        hoja.Cells[6, 4] = "LIQUIDACIÓN DE EXAMENES MÉDICOS OCUPACIONALES N° " + "";
+        //        hoja.get_Range("B6", "L6").Merge(true);
+        //        hoja.get_Range("B6", "L6").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        hoja.get_Range("B6", "L6").Font.Bold = true;
+        //        hoja.get_Range("B6", "L6").Font.Size = 18;
+        //        hoja.get_Range("B6", "L6").RowHeight = 35;
+        //        hoja.get_Range("B6", "L6").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        hoja.Cells[8, 2] = "EMPRESA A FACTURAR: ";
+        //        hoja.Cells[8, 4] = obtenerInformacionEmpresas.v_Name;
+        //        hoja.get_Range("B8", "C8").Merge(true);
+        //        hoja.get_Range("D8", "L8").Merge(true);
+        //        hoja.get_Range("B8", "C8").Font.Bold = true;
+        //        hoja.get_Range("B8", "C8").BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexAutomatic, Excel.XlColorIndex.xlColorIndexAutomatic);
+        //        hoja.get_Range("B8", "C8").RowHeight = 30;
+        //        hoja.get_Range("D8", "L8").RowHeight = 30;
+        //        hoja.get_Range("B8", "C8").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        hoja.get_Range("D8", "L8").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        hoja.Cells[9, 2] = "RUC: ";
+        //        hoja.Cells[9, 4] = obtenerInformacionEmpresas.v_IdentificationNumber;
+        //        hoja.get_Range("B9", "C9").Merge(true);
+        //        hoja.get_Range("D9", "L9").Merge(true);
+        //        hoja.get_Range("D9", "L9").HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+        //        hoja.get_Range("B9", "C9").Font.Bold = true;
+        //        hoja.get_Range("B9", "C9").RowHeight = 30;
+        //        hoja.get_Range("D9", "L9").RowHeight = 30;
+        //        hoja.get_Range("B9", "C9").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        hoja.get_Range("D9", "L9").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        hoja.Cells[10, 2] = "DIRECCION: ";
+        //        hoja.Cells[10, 4] = obtenerInformacionEmpresas.v_Address;
+        //        hoja.get_Range("B10", "C10").Merge(true);
+        //        hoja.get_Range("D10", "L10").Merge(true);
+        //        hoja.get_Range("B10", "C10").Font.Bold = true;
+        //        hoja.get_Range("B10", "C10").RowHeight = 30;
+        //        hoja.get_Range("D10", "L10").RowHeight = 30;
+        //        hoja.get_Range("B10", "C10").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        hoja.get_Range("D10", "L10").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        //Asigna borde
+        //        rango = hoja.Range["B8", "L10"];
+        //        rango.Borders.LineStyle = Excel.XlLineStyle.xlDot;
+
+        //        //Modificamos los anchos de las columnas
+        //        rango = hoja.Columns[1];
+        //        rango.ColumnWidth = 3;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        rango = hoja.Columns[2];
+        //        rango.ColumnWidth = 5;
+        //        rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        rango = hoja.Columns[3];
+        //        rango.ColumnWidth = 40;
+        //        rango.Cells.WrapText = true;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        rango = hoja.Columns[4];
+        //        rango.ColumnWidth = 7;
+        //        rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        rango = hoja.Columns[5];
+        //        rango.ColumnWidth = 12;
+        //        rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        rango = hoja.Columns[6];
+        //        rango.ColumnWidth = 10;
+        //        rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        rango = hoja.Columns[7];
+        //        rango.ColumnWidth = 30;
+        //        rango.Cells.WrapText = true;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        rango = hoja.Columns[8];
+        //        rango.ColumnWidth = 40;
+        //        rango.Cells.WrapText = true;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //        rango = hoja.Columns[9];
+        //        rango.ColumnWidth = 8;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        rango.NumberFormat = "#0.00";
+
+        //        rango = hoja.Columns[10];
+        //        rango.ColumnWidth = 12;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        rango.NumberFormat = "#0.00";
+
+        //        rango = hoja.Columns[11];
+        //        rango.ColumnWidth = 8;
+        //        rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+        //        rango.NumberFormat = "#0.00";
+
+        //        rango = hoja.Columns[12];
+        //        rango.ColumnWidth = 20;
+        //        rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, "Error de redondeo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Error mientras liberaba objecto " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
+
+        private void btnDATA_Click(object sender, EventArgs e)
+        {
+            OperationResult objOperationResult = new OperationResult();
+
+            var listaConsultorio = _AgendaDtoList.ToList().GroupBy(g => g.CONSULTORIO).Select(p => p.FirstOrDefault());
+            List<AgendaDto> ListaFinal = new List<AgendaDto>();
+            foreach (var item in listaConsultorio)
+            {
+                AgendaDto _AgendaDto = new AgendaDto();
+                _AgendaDto.CONSULTORIO = item.CONSULTORIO;
+                var listaConsultorioMEd = _AgendaDtoList.FindAll(p=> p.CONSULTORIO == item.CONSULTORIO);
+                var listamedico = listaConsultorioMEd.ToList().GroupBy(p=>p.MEDICO).Select(p=>p.FirstOrDefault());
+                List<AgendaDtoNew1> _AgendaDtoNew1LIst = new List<AgendaDtoNew1>();
+                foreach (var item2 in listamedico)
+                {
+                    AgendaDtoNew1 _AgendaDtoNew1 = new AgendaDtoNew1();
+                    _AgendaDtoNew1.MEDICO = item2.MEDICO;
+                    var listaPacientesMed = _AgendaDtoList.FindAll(p => p.CONSULTORIO == item.CONSULTORIO && p.MEDICO == item2.MEDICO);
+                    List<AgendaDtoNew2> _AgendaDtoNew2LIst = new List<AgendaDtoNew2>();
+                    foreach (var item3 in listaPacientesMed)
+                    {
+                          AgendaDtoNew2 _AgendaDtoNew2 = new AgendaDtoNew2();
+                          _AgendaDtoNew2.COMPROBANTE = item3.COMPROBANTE;
+                          _AgendaDtoNew2.d_DateTimeCalendar = item3.d_DateTimeCalendar;
+                          _AgendaDtoNew2.v_Pacient = item3.Nombres + " " + item3.ApePaterno + " " + item3.ApeMaterno;
+                          _AgendaDtoNew2.i_Edad = item3.i_Edad;
+                          _AgendaDtoNew2.HISTORIA = item3.HISTORIA;
+                          _AgendaDtoNew2.IMPORTE = item3.IMPORTE;
+                          _AgendaDtoNew2.VENDEDOR = item3.VENDEDOR;
+                          _AgendaDtoNew2LIst.Add(_AgendaDtoNew2);
+                    }
+                    _AgendaDtoNew1.AgendaDtoNewList2 = _AgendaDtoNew2LIst;
+                    _AgendaDtoNew1LIst.Add(_AgendaDtoNew1);
+                    
+                }
+                _AgendaDto.AgendaDtoNewList1 = _AgendaDtoNew1LIst;
+                ListaFinal.Add(_AgendaDto);
+
+                
+            }
+
+            string ruta = GetApplicationConfigValue("rutaEgresos").ToString();
+
+            //var lista = _serviceBL.GetListaLiquidacion(ref _objOperationResult, liquidacion);
+
+            BackgroundWorker bw = sender as BackgroundWorker;
+
+            Excel.Application excel = new Excel.Application();
+            Excel._Workbook libro = null;
+            Excel._Worksheet hoja = null;
+            Excel.Range rango = null;
+            string finic =  dtpDateTimeStar.Text ;
+            finic = finic.Replace('/', '-');
+            string fend = dptDateTimeEnd.Text;
+            fend = fend.Replace('/', '-');
+            try
+            {
+                using (new LoadingClass.PleaseWait(this.Location, "Generando..."))
+                {
+                    //creamos un libro nuevo y la hoja con la que vamos a trabajar
+                    libro = (Excel._Workbook)excel.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
+
+                    hoja = (Excel._Worksheet)libro.Worksheets.Add();
+                    hoja.Application.ActiveWindow.DisplayGridlines = false;
+                    hoja.Name = "RESUMEN DE ATENCIONES";
+                    ((Excel.Worksheet)excel.ActiveWorkbook.Sheets["Hoja1"]).Delete();   //Borro hoja que crea en el libro por defecto
+
+                    //DatosEmpresa
+                    rango = (Microsoft.Office.Interop.Excel.Range)hoja.get_Range("B2", "D5");
+                    rango.Select();
+                    rango.RowHeight = 25;
+                    hoja.get_Range("B2", "D5").Merge(true);
+
+                    Microsoft.Office.Interop.Excel.Pictures oPictures = (Microsoft.Office.Interop.Excel.Pictures)hoja.Pictures(System.Reflection.Missing.Value);
+
+                    hoja.Shapes.AddPicture(@"C:\Program Files (x86)\NetMedical\Banner\banner.jpg",
+                        Microsoft.Office.Core.MsoTriState.msoFalse,
+                        Microsoft.Office.Core.MsoTriState.msoCTrue,
+                        float.Parse(rango.Left.ToString()),
+                        float.Parse(rango.Top.ToString()),
+                        200,
+                        90);
+
+                    montaCabeceras(3, ref hoja, "");
+
+                    //DatosDinamicos
+                    int fila = 12;
+                    int count = 1;
+                    int i = 0;
+                    decimal sumatipoExm = 0;
+                    decimal sumatipoExm_1 = 0;
+                    decimal igvPerson = 0;
+                    decimal _igvPerson = 0;
+                    decimal subTotalPerson = 0;
+                    decimal _subTotalPerson = 0;
+                    decimal totalFinal = 0;
+                    decimal totalFinal_1 = 0;
+                    foreach (var lista1 in ListaFinal)
+                    {
+                        //Asignamos los datos a las celdas de la fila
+                        hoja.Cells[fila + i, 2] = "CONSULTORIO: " + lista1.CONSULTORIO;
+                        string x1 = "B" + (fila + i).ToString();
+                        string y1 = "I" + (fila + i).ToString();
+                        rango = hoja.Range[x1, y1];
+                        rango.Merge(true);
+                        rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                        rango.Interior.Color = Color.Gray;
+                        rango.Font.Size = 14;
+                        rango.RowHeight = 30;
+                        rango.Font.Bold = true;
+                        i++;
+
+                        foreach (var item in lista1.AgendaDtoNewList1)
+                        {
+                            hoja.Cells[fila + i, 2] = "MÉDICO: " + item.MEDICO;
+                            string x2 = "B" + (fila + i).ToString();
+                            string y2 = "I" + (fila + i).ToString();
+                            rango = hoja.Range[x2, y2];
+                            rango.Merge(true);
+                            rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                            rango.Interior.Color = Color.GreenYellow;
+                            rango.Font.Size = 14;
+                            rango.RowHeight = 30;
+                            rango.Font.Bold = true;
+                            i++;
+
+                            hoja.Cells[fila + i, 2] = "N° COMPROBANTE";
+                            hoja.Cells[fila + i, 3] = "FECHA";
+                            hoja.Cells[fila + i, 4] = "PACIENTE ";
+                            hoja.Cells[fila + i, 5] = "EDAD ";
+                            hoja.Cells[fila + i, 6] = "H.C.";
+                            hoja.Cells[fila + i, 7] = "TRATAMIENDO ";
+                            hoja.Cells[fila + i, 8] = "IMPORTE ";
+                            hoja.Cells[fila + i, 9] = "USUARIO ";
+                            
+                            string x3 = "B" + (fila + i).ToString();
+                            string y3 = "I" + (fila + i).ToString();
+                            rango = hoja.Range[x3, y3];
+                            rango.Borders.LineStyle = Excel.XlLineStyle.xlDash;
+                            rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                            rango.RowHeight = 25;
+                            rango.Font.Bold = true;
+                            i++;
+                            decimal total = 0;
+                            foreach (var item2 in item.AgendaDtoNewList2)
+                            {
+                                hoja.Cells[fila + i, 2] = item2.COMPROBANTE.Trim();
+                                hoja.Cells[fila + i, 3] = item2.d_DateTimeCalendar.Value.Date;
+                                hoja.Cells[fila + i, 4] = item2.v_Pacient.Trim();
+                                hoja.Cells[fila + i, 5] = item2.i_Edad.ToString() + " A.";
+                                hoja.Cells[fila + i, 6] = item2.HISTORIA;
+                                hoja.Cells[fila + i, 7] = "- - -";
+                                hoja.Cells[fila + i, 8] = item2.IMPORTE;
+                                hoja.Cells[fila + i, 9] = item2.VENDEDOR;
+                                total += decimal.Parse(item2.IMPORTE.ToString());
+                                i++;
+                            }
+                            hoja.Cells[fila + i, 9] = total;
+                            sumatipoExm_1 = decimal.Round(sumatipoExm, 2);
+                            _igvPerson = decimal.Round(igvPerson, 2);
+                            _subTotalPerson = decimal.Round(subTotalPerson, 2);
+
+                            hoja.Cells[fila + i, 2] = "TOTAL:";
+                            string x4 = "B" + (fila + i).ToString();
+                            string y4 = "G" + (fila + i).ToString();
+                            rango = hoja.Range[x4, y4];
+                            rango.Merge(true);
+                            rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight;
+                            rango.Font.Bold = true;
+                            rango.Font.Size = 14;
+                            hoja.Cells[fila + i, 8] = total;
+                            hoja.Cells[fila + i, 9] = "";
+                            i++;
+                        }
+                    }
+
+                    string x7 = "B" + (fila + i).ToString();
+                    string y7 = "I" + (fila + i).ToString();
+                    rango = (Microsoft.Office.Interop.Excel.Range)hoja.get_Range(x7, y7);
+                    rango.Select();
+                    hoja.get_Range(x7, y7).Merge(true);
+
+                    Microsoft.Office.Interop.Excel.Pictures oPictures2 = (Microsoft.Office.Interop.Excel.Pictures)hoja.Pictures(System.Reflection.Missing.Value);
+
+                    hoja.Shapes.AddPicture(@"C:\Program Files (x86)\NetMedical\Banner\banner2.jpg",
+                        Microsoft.Office.Core.MsoTriState.msoFalse,
+                        Microsoft.Office.Core.MsoTriState.msoCTrue,
+                        float.Parse(rango.Left.ToString()),
+                        float.Parse(rango.Top.ToString()),
+                        float.Parse(rango.Width.ToString()),
+                        80);
+
+                    libro.Saved = true;
+
+                    libro.SaveAs(ruta + @"\" + "Resumen de atenciones del " + finic + " al " + fend + ".xlsx");
+
+                    libro.Close();
+                    releaseObject_(libro);
+
+                    excel.UserControl = false;
+                    excel.Quit();
+                    releaseObject_(excel);
+                }
+
+                Process.Start(ruta + @"\" +  "Resumen de atenciones del " + finic + " al " + fend +".xlsx");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error en creación/actualización de la Liquidación N° " + "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                using (new LoadingClass.PleaseWait(this.Location, "Generando..."))
+                {
+                    libro.Saved = true;
+                    libro.SaveAs(ruta + @"\" + "Resumen Atenciones fail.xlsx");
+
+                    libro.Close();
+                    releaseObject_(libro);
+
+                    excel.UserControl = false;
+                    excel.Quit();
+                    releaseObject_(excel);
+                }
+                Process.Start(ruta + @"\" + "Resumen Atenciones fail.xlsx");
+            }
+        }
+
+        private void montaCabeceras(int fila, ref Excel._Worksheet hoja, string _liquidacion)
+        {
+
+           
+            var MedicalCenter = new ServiceBL().GetInfoMedicalCenter();
+           
+            var obtenerInformacionEmpresas = new ServiceBL().GetInfoMedicalCenter();
+            try
+            {
+                Excel.Range rango;
+                
+                //** TITULO DEL LIBRO **
+                ////hoja.Cells[1, 2] = MedicalCenter.b_Image;
+                //hoja.get_Range("B1", "C1");
+
+                hoja.Cells[6, 4] = "RESUMEN DE ATENCIONES DEL " + dtpDateTimeStar.Text + " AL " + dptDateTimeEnd.Text;
+                hoja.get_Range("B6", "I6").Merge(true);
+                hoja.get_Range("B6", "I6").HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                hoja.get_Range("B6", "I6").Font.Bold = true;
+                hoja.get_Range("B6", "I6").Font.Size = 18;
+                hoja.get_Range("B6", "I6").RowHeight = 35;
+                hoja.get_Range("B6", "I6").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                hoja.Cells[8, 2] = "EMPRESA:";
+                hoja.Cells[8, 4] = obtenerInformacionEmpresas.v_Name;
+                hoja.get_Range("B8", "B8").Merge(true);
+                hoja.get_Range("C8", "I8").Merge(true);
+                hoja.get_Range("B8", "B8").Font.Bold = true;
+                hoja.get_Range("B8", "C8").BorderAround(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexAutomatic, Excel.XlColorIndex.xlColorIndexAutomatic);
+                hoja.get_Range("B8", "C8").RowHeight = 30;
+                hoja.get_Range("C8", "I8").RowHeight = 30;
+                hoja.get_Range("B8", "B8").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                hoja.get_Range("C8", "I8").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                hoja.Cells[9, 2] = "RUC: ";
+                hoja.Cells[9, 4] = obtenerInformacionEmpresas.v_IdentificationNumber;
+                hoja.get_Range("B9", "B9").Merge(true);
+                hoja.get_Range("C9", "I9").Merge(true);
+                hoja.get_Range("C9", "I9").HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                hoja.get_Range("B9", "B9").Font.Bold = true;
+                hoja.get_Range("B9", "B9").RowHeight = 30;
+                hoja.get_Range("C9", "I9").RowHeight = 30;
+                hoja.get_Range("B9", "B9").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                hoja.get_Range("C9", "I9").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                hoja.Cells[10, 2] = "DIRECCION: ";
+                hoja.Cells[10, 4] = obtenerInformacionEmpresas.v_Address;
+                hoja.get_Range("B10", "B10").Merge(true);
+                hoja.get_Range("C10", "I10").Merge(true);
+                hoja.get_Range("B10", "B10").Font.Bold = true;
+                hoja.get_Range("B10", "B10").RowHeight = 30;
+                hoja.get_Range("C10", "I10").RowHeight = 30;
+                hoja.get_Range("B10", "B10").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                hoja.get_Range("C10", "I10").VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                //Asigna borde
+                rango = hoja.Range["B8", "I10"];
+                rango.Borders.LineStyle = Excel.XlLineStyle.xlDot;
+
+                //Modificamos los anchos de las columnas
+                rango = hoja.Columns[1];
+                rango.ColumnWidth = 3;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                rango = hoja.Columns[2];
+                rango.ColumnWidth = 20;
+                rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                rango = hoja.Columns[3];
+                rango.ColumnWidth = 15;
+                rango.Cells.WrapText = true;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                rango = hoja.Columns[4];
+                rango.ColumnWidth = 50;
+                rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                rango = hoja.Columns[5];
+                rango.ColumnWidth = 10;
+                rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                rango.NumberFormat = "#00";
+
+                rango = hoja.Columns[6];
+                rango.ColumnWidth = 15;
+                rango.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                rango = hoja.Columns[7];
+                rango.ColumnWidth = 20;
+                rango.Cells.WrapText = true;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+
+                rango = hoja.Columns[8];
+                rango.ColumnWidth = 20;
+                rango.Cells.WrapText = true;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                rango.NumberFormat = "#0.00";
+
+                rango = hoja.Columns[9];
+                rango.ColumnWidth = 15;
+                rango.VerticalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error de redondeo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void releaseObject_(object obj)
+        {
+            try
+            {
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                MessageBox.Show("Error mientras liberaba objecto " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
         
     }
 }

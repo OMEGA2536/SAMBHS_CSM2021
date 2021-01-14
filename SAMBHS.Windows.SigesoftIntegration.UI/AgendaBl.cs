@@ -543,7 +543,7 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI
                             " from servicecomponent scu left join systemuser syu on scu.i_MedicoTratanteId = syu.i_SystemUserId  " +  
                             " left join person pru on syu.v_PersonId = pru.v_PersonId " + 
                             "  where scu.v_ServiceId = d.v_ServiceId    and scu.v_ComponentId = 'N009-ME000001143' " + 
-                            "  and i_IsRequiredId = 1) IS NULL THEN 'CLINICA SAN MARCOS' ELSE   " +
+                            "  and i_IsRequiredId = 1) IS NULL THEN 'CLINICA, SAN MARCOS' ELSE   " +
                             "  (select  pru.v_FirstName + ', ' + pru.v_FirstLastName + ' ' + pru.v_SecondLastName  AS MEDICO " +  
                             "  from servicecomponent scu    left join systemuser syu on scu.i_MedicoTratanteId = syu.i_SystemUserId     " +
                             "  left join person pru on syu.v_PersonId = pru.v_PersonId    " +
@@ -585,8 +585,8 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI
                             "INNER JOIN groupoccupation l on l.v_GroupOccupationId = e.v_GroupOccupationId " +
                             "INNER JOIN servicecomponent m on d.v_ServiceId = m.v_ServiceId " +
                             " LEFT JOIN [20505310072].[dbo].[venta] vent on d.v_ComprobantePago = vent.v_SerieDocumento + '-' + vent.v_CorrelativoDocumento    " +
-                            " LEFT JOIN [20505310072].[dbo].[vendedor] vendu on vent.v_IdVendedor = vendu.v_IdVendedor  " +
-                            " LEFT JOIN [20505310072].[dbo].[systemuser] systu on vendu.i_SystemUser = systu.i_SystemUserId " +
+                            //" LEFT JOIN [20505310072].[dbo].[vendedor] vendu on vent.v_IdVendedor = vendu.v_IdVendedor  " +
+                            " LEFT JOIN [20505310072].[dbo].[systemuser] systu on vent.i_InsertaIdUsuario = systu.i_SystemUserId " +
                             "WHERE (" + nroDoc + " is null or " + nroDoc + "  = B.v_DocNumber )" +
                             "AND(d_DateTimeCalendar > CONVERT(datetime,'" + fi + "',103) and  d_DateTimeCalendar < CONVERT(datetime,'" + ff + "',103)) " +
                             //"AND(" + tipoServicio + " is null or " + tipoServicio + " = i_ServiceTypeId) " +
