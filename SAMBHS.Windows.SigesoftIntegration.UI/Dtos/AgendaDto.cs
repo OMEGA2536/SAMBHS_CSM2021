@@ -58,5 +58,11 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI.Dtos
         public string v_CreationUser { get; set; }
         public string v_ComprobantePago { get; set; }
         public string v_NroLiquidacion { get; set; }
+        public string MEDICO { get; set; }
+        public string CONSULTORIO { get; set; }
+        public string VENDEDOR { get; set; }
+        public string IMPORTE { get; set; }
+        public string HISTORIA { get; set; }
+        public string COMPROBANTE { get; set; }
     }
 }

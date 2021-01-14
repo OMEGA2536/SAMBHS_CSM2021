@@ -28,3 +28,33 @@ D:\Projects\NetConta_CSM\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\De
 D:\Projects\NetConta_CSM\Components\Common\BusinessLayer\SAMBHS.Common.BL\obj\Debug\SAMBHS.Common.BL.csprojResolveAssemblyReference.cache
 D:\Projects\NetConta_CSM\Components\Common\BusinessLayer\SAMBHS.Common.BL\obj\Debug\SAMBHS.Common.BL.dll
 D:\Projects\NetConta_CSM\Components\Common\BusinessLayer\SAMBHS.Common.BL\obj\Debug\SAMBHS.Common.BL.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\Librerias\Devart.Data.Design.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\Librerias\Devart.Data.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\Librerias\Devart.Data.Linq.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\Librerias\Devart.Data.PostgreSql.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\Librerias\Devart.Data.PostgreSql.Entity.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.BL.dll.config
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.BL.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.BL.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\Microsoft.CSharp.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.BE.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.DataModel.MSSQL.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.Resource.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\System.Data.DataSetExtensions.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\System.Data.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\System.Data.Entity.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\System.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\System.Xml.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\System.Xml.Linq.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\itextsharp.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\FineUI.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.DataModel.MSSQLWIN.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\Dapper.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\Ionic.Zip.Reduced.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.BE.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.DataModel.MSSQL.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.Resource.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\bin\Debug\SAMBHS.Common.DataModel.MSSQLWIN.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\obj\Debug\SAMBHS.Common.BL.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\obj\Debug\SAMBHS.Common.BL.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\Components\Common\BusinessLayer\SAMBHS.Common.BL\obj\Debug\SAMBHS.Common.BL.pdb

@@ -56,17 +56,17 @@ namespace NetPdf
             #endregion
 
             #region Fonts
-            Font fontTitle1 = FontFactory.GetFont("Calibri Light", 8, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
+            Font fontTitle1 = FontFactory.GetFont("Calibri Light", 9, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
             Font fontTitle2 = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.NORMAL, new BaseColor(System.Drawing.Color.Black));
             Font fontTitleTable = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
             Font fontTitleTableNegro = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
             Font fontSubTitle = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.White));
             Font fontSubTitleNegroNegrita = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
 
-            Font fontColumnValue = FontFactory.GetFont("Calibri Light", 5, iTextSharp.text.Font.NORMAL, new BaseColor(System.Drawing.Color.Black));
-            Font fontColumnValueBold = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
-            Font fontColumnValueApendice = FontFactory.GetFont("Calibri Light", 4, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
-            Font fontColumnValue1 = FontFactory.GetFont("Calibri Light", 8, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
+            Font fontColumnValue = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.NORMAL, new BaseColor(System.Drawing.Color.Black));
+            Font fontColumnValueBold = FontFactory.GetFont("Calibri Light", 7, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
+            Font fontColumnValueApendice = FontFactory.GetFont("Calibri Light", 5, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
+            Font fontColumnValue1 = FontFactory.GetFont("Calibri Light", 9, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
             Font fontColumnValueBold1 = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.Black));
 
             Font fontColumnValueBoldWhite = FontFactory.GetFont("Calibri Light", 6, iTextSharp.text.Font.BOLD, new BaseColor(System.Drawing.Color.White));
@@ -83,8 +83,8 @@ namespace NetPdf
             coorelativos[1] = coorelativos[1].Trim();
             string DatosEmpresa = ObtenerDatosEmpresa();
             string moneda;
-            if (serie[1] == "SOLES"){moneda = "S/.";}
-            else{moneda = "$";}
+            if (serie[1] == "SOLES") { moneda = "S/."; }
+            else { moneda = "$"; }
             string[] empresa = DatosEmpresa.Split('|');
             //string DatosPaciente = ObtenerDatosPaciente(serviceId);
             string[] Paciente = DatosPaciente.Split('|');
@@ -96,7 +96,7 @@ namespace NetPdf
             //{
             //    string FechaServ = servicedate.ToShortDateString();
             //}
-            
+
             string usuario = ObtenerUsuario(coorelativos);
             string medico = calendarId.Split('|')[1];
             #endregion
@@ -106,8 +106,8 @@ namespace NetPdf
             cells = new List<PdfPCell>();
             var tamaño_celda = 15f;
             var logo = Image.GetInstance("C:/Banner/banner5.png");
-            logo.ScalePercent(15);
-            logo.SetAbsolutePosition(5, 270);
+            logo.ScalePercent(19);
+            logo.SetAbsolutePosition(6, 267);
             logo.Alignment = Image.ALIGN_BASELINE;
             document.Add(logo);
             //var sl = Image.GetInstance("C:/Banner/banner6.png");

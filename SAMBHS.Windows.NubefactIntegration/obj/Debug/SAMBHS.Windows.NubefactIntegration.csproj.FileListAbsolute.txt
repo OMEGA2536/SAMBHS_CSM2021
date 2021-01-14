@@ -21,3 +21,25 @@ D:\Projects\NetConta_CSM\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Com
 D:\Projects\NetConta_CSM\SAMBHS.Windows.NubefactIntegration\obj\Debug\SAMBHS.Windows.NubefactIntegration.csprojResolveAssemblyReference.cache
 D:\Projects\NetConta_CSM\SAMBHS.Windows.NubefactIntegration\obj\Debug\SAMBHS.Windows.NubefactIntegration.dll
 D:\Projects\NetConta_CSM\SAMBHS.Windows.NubefactIntegration\obj\Debug\SAMBHS.Windows.NubefactIntegration.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\Librerias\Devart.Data.Design.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\Librerias\Devart.Data.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\Librerias\Devart.Data.Linq.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\Librerias\Devart.Data.PostgreSql.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\Librerias\Devart.Data.PostgreSql.Entity.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Windows.NubefactIntegration.dll.config
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Windows.NubefactIntegration.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Windows.NubefactIntegration.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Common.DataModel.MSSQLWIN.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Common.Resource.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Common.BE.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\FineUI.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\Dapper.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\Ionic.Zip.Reduced.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\itextsharp.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Common.DataModel.MSSQLWIN.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Common.Resource.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\bin\Debug\SAMBHS.Common.BE.pdb
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\obj\Debug\SAMBHS.Windows.NubefactIntegration.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\obj\Debug\SAMBHS.Windows.NubefactIntegration.dll
+C:\Users\Administrator\Desktop\SAN MARCOS\DESARROLLO\SAMBHS_CSM2021\SAMBHS.Windows.NubefactIntegration\obj\Debug\SAMBHS.Windows.NubefactIntegration.pdb

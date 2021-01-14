@@ -538,10 +538,26 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI
                             "d.i_StatusLiquidation, " +
                             "a.i_LineStatusId, " + 
                             "f1.v_IdentificationNumber as RucEmpFact, " +
-                            "DATEDIFF(YEAR,b.d_Birthdate,GETDATE())-(CASE WHEN DATEADD(YY,DATEDIFF(YEAR,b.d_Birthdate,GETDATE()),b.d_Birthdate)>GETDATE() THEN 1 ELSE 0 END) as i_Edad " +                           //"m.i_MedicoTratanteId " +
+                            "DATEDIFF(YEAR,b.d_Birthdate,GETDATE())-(CASE WHEN DATEADD(YY,DATEDIFF(YEAR,b.d_Birthdate,GETDATE()),b.d_Birthdate)>GETDATE() THEN 1 ELSE 0 END) as i_Edad , " +                           //"m.i_MedicoTratanteId " +
+                            " CASE WHEN (select  pru.v_FirstName + ', ' + pru.v_FirstLastName + ' ' + pru.v_SecondLastName  AS MEDICO " +
+                            " from servicecomponent scu left join systemuser syu on scu.i_MedicoTratanteId = syu.i_SystemUserId  " +  
+                            " left join person pru on syu.v_PersonId = pru.v_PersonId " + 
+                            "  where scu.v_ServiceId = d.v_ServiceId    and scu.v_ComponentId = 'N009-ME000001143' " + 
+                            "  and i_IsRequiredId = 1) IS NULL THEN 'CLINICA SAN MARCOS' ELSE   " +
+                            "  (select  pru.v_FirstName + ', ' + pru.v_FirstLastName + ' ' + pru.v_SecondLastName  AS MEDICO " +  
+                            "  from servicecomponent scu    left join systemuser syu on scu.i_MedicoTratanteId = syu.i_SystemUserId     " +
+                            "  left join person pru on syu.v_PersonId = pru.v_PersonId    " +
+                            "  where scu.v_ServiceId = d.v_ServiceId   " +       
+                            "   and scu.v_ComponentId = 'N009-ME000001143' and i_IsRequiredId = 1) END  AS 'MEDICO', " +
+                            "   CASE WHEN sypc.v_Value1 IS NULL  THEN '- - -' ELSE sypc.v_Value1 END AS 'CONSULTORIO',  " +
+                            "   CASE WHEN systu.v_UserName IS NULL THEN '- - -' ELSE systu.v_UserName END AS 'VENDEDOR' ,    " +
+                            "   CASE WHEN vent.v_IdVenta IS NULL THEN '0.00' ELSE vent.d_Total END AS 'IMPORTE',  " +
+                            "   CASE WHEN hisc.v_nroHistoria IS NULL THEN '- - -' ELSE hisc.v_nroHistoria END AS 'HISTORIA' , " +
+                            " CASE WHEN d.v_ComprobantePago IS NULL THEN '- - -' ELSE d.v_ComprobantePago END AS 'COMPROBANTE' "+
                             "FROM calendar a "+
                             "INNER JOIN systemuser z on a.i_InsertUserId = z.i_SystemUserId " +
                             "INNER JOIN person b on a.v_PersonId = b.v_PersonId "+
+                            " LEFT JOIN historyclinics hisc on b.v_PersonId = hisc.v_PersonId " +
                             "INNER JOIN systemparameter sp1 on a.i_LineStatusId = sp1.i_ParameterId and sp1.i_GroupId = 120 "+
                             "INNER JOIN service d on a.v_ServiceId = d.v_ServiceId "+
                             "LEFT JOIN organization f1 on d.v_OrganizationId = f1.v_OrganizationId " +
@@ -551,6 +567,7 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI
                             "INNER JOIN systemparameter sp5 on a.i_CalendarStatusId = sp5.i_ParameterId and sp5.i_GroupId = 122 "+
                             "INNER JOIN systemparameter sp6 on a.i_IsVipId = sp6.i_ParameterId and sp6.i_GroupId = 111 "+
                             "LEFT JOIN protocol e on d.v_ProtocolId = e.v_ProtocolId "+
+                            " LEFT JOIN systemparameter sypc on sypc.i_GroupId = 361 and e.i_Consultorio = sypc.i_ParameterId " +
                             "LEFT JOIN systemparameter sp7 on e.i_EsoTypeId = sp7.i_ParameterId and sp7.i_GroupId = 118 " +
                             "INNER JOIN systemparameter sp8 on d.i_ServiceStatusId = sp8.i_ParameterId and sp8.i_GroupId = 125 "+
                             "INNER JOIN systemparameter sp9 on d.i_AptitudeStatusId = sp9.i_ParameterId and sp9.i_GroupId = 124 "+
@@ -567,6 +584,9 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI
                             "LEFT JOIN location k on d.v_OrganizationId = k.v_OrganizationId and d.v_LocationId = k.v_LocationId "+
                             "INNER JOIN groupoccupation l on l.v_GroupOccupationId = e.v_GroupOccupationId " +
                             "INNER JOIN servicecomponent m on d.v_ServiceId = m.v_ServiceId " +
+                            " LEFT JOIN [20505310072].[dbo].[venta] vent on d.v_ComprobantePago = vent.v_SerieDocumento + '-' + vent.v_CorrelativoDocumento    " +
+                            " LEFT JOIN [20505310072].[dbo].[vendedor] vendu on vent.v_IdVendedor = vendu.v_IdVendedor  " +
+                            " LEFT JOIN [20505310072].[dbo].[systemuser] systu on vendu.i_SystemUser = systu.i_SystemUserId " +
                             "WHERE (" + nroDoc + " is null or " + nroDoc + "  = B.v_DocNumber )" +
                             "AND(d_DateTimeCalendar > CONVERT(datetime,'" + fi + "',103) and  d_DateTimeCalendar < CONVERT(datetime,'" + ff + "',103)) " +
                             //"AND(" + tipoServicio + " is null or " + tipoServicio + " = i_ServiceTypeId) " +
@@ -588,7 +608,7 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI
                             "k.v_Name,a.d_EntryTimeCM,l.v_Name,b.v_CurrentOccupation,l.v_Name," +
                             "b.v_CurrentOccupation,B.v_FirstName,B.v_FirstLastName,B.v_SecondLastName,h.v_Name," +
                             "e.v_ProtocolId,a.v_CalendarId,b.d_Birthdate,d.i_MasterServiceId,b.v_PersonId," +
-                            "d.v_OrganizationId,f1.v_IdentificationNumber, z.v_UserName, d.v_ComprobantePago, d.v_NroLiquidacion";
+                            "d.v_OrganizationId,f1.v_IdentificationNumber, z.v_UserName, d.v_ComprobantePago, d.v_NroLiquidacion, sypc.v_Value1, systu.v_UserName, vent.d_Total, vent.v_IdVenta, hisc.v_nroHistoria";
 
                 var data = cnx.Query<AgendaDto>(query).ToList();
                 return data;

@@ -66,6 +66,12 @@
             Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn10 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("v_EmployerOrganizationId");
             Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn9 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("v_CalendarId");
             Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn11 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("i_ServiceTypeId");
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn12 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("MEDICO");
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn16 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("CONSULTORIO");
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn17 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("VENDEDOR");
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn18 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("IMPORTE");
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn19 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("HISTORIA");
+            Infragistics.Win.UltraWinGrid.UltraGridColumn ultraGridColumn24 = new Infragistics.Win.UltraWinGrid.UltraGridColumn("COMPROBANTE");
             Infragistics.Win.Appearance appearance2 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance3 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance4 = new Infragistics.Win.Appearance();
@@ -91,6 +97,47 @@
             Infragistics.Win.Appearance appearance13 = new Infragistics.Win.Appearance();
             Infragistics.Win.Appearance appearance14 = new Infragistics.Win.Appearance();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmBandejaAgenda));
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn1 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("d_DateTimeCalendar");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn2 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_Pacient");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn3 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("d_EntryTimeCM");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn4 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("d_SalidaCM");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn5 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_DocNumber");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn6 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_LineStatusName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn7 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_ServiceStatusName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn8 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_AptitudeStatusName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn9 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_ServiceTypeName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn10 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_ServiceName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn11 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_NewContinuationName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn12 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_EsoTypeName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn13 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_CalendarStatusName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn14 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_ProtocolName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn15 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_IsVipName");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn16 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_CreationUser");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn17 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("d_CreationDate");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn18 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_UpdateUser");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn19 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("d_UpdateDate");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn20 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_OrganizationLocationProtocol");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn21 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_OrganizationLocationService");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn22 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("b_Seleccionar");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn23 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("i_Edad");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn24 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("GESO");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn25 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("Puesto");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn26 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("Nombres");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn27 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("ApePaterno");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn28 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("ApeMaterno");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn29 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_ServiceId");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn30 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_ComprobantePago");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn31 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("i_NewContinuationId");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn32 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_ProtocolId");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn33 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_EmployerOrganizationId");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn34 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("v_CalendarId");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn35 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("i_ServiceTypeId");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn36 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("MEDICO");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn37 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("CONSULTORIO");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn38 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("VENDEDOR");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn39 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("IMPORTE");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn40 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("HISTORIA");
+            Infragistics.Win.UltraWinDataSource.UltraDataColumn ultraDataColumn41 = new Infragistics.Win.UltraWinDataSource.UltraDataColumn("COMPROBANTE");
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnFilter = new System.Windows.Forms.Button();
             this.ddlLineStatusId = new System.Windows.Forms.ComboBox();
@@ -114,6 +161,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnCorrelativo = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnFusionarS = new System.Windows.Forms.Button();
@@ -158,7 +206,7 @@
             this.WorkingOrganization = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.btnCorrelativo = new System.Windows.Forms.Button();
+            this.ultraDataSource1 = new Infragistics.Win.UltraWinDataSource.UltraDataSource(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -171,6 +219,7 @@
             this.btnFusionar.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ultraDataSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -501,6 +550,28 @@
             this.splitContainer1.SplitterDistance = 622;
             this.splitContainer1.TabIndex = 56;
             // 
+            // btnCorrelativo
+            // 
+            this.btnCorrelativo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCorrelativo.BackColor = System.Drawing.SystemColors.Control;
+            this.btnCorrelativo.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.btnCorrelativo.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.btnCorrelativo.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnCorrelativo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCorrelativo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCorrelativo.ForeColor = System.Drawing.Color.Black;
+            this.btnCorrelativo.Image = global::SAMBHS.Windows.WinClient.UI.Properties.Resources.script_gear;
+            this.btnCorrelativo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCorrelativo.Location = new System.Drawing.Point(484, 417);
+            this.btnCorrelativo.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCorrelativo.Name = "btnCorrelativo";
+            this.btnCorrelativo.Size = new System.Drawing.Size(130, 25);
+            this.btnCorrelativo.TabIndex = 111;
+            this.btnCorrelativo.Text = "Correlativo HC";
+            this.btnCorrelativo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCorrelativo.UseVisualStyleBackColor = false;
+            this.btnCorrelativo.Click += new System.EventHandler(this.btnCorrelativo_Click);
+            // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -657,6 +728,12 @@
             ultraGridColumn9.Hidden = true;
             ultraGridColumn11.Header.VisiblePosition = 34;
             ultraGridColumn11.Hidden = true;
+            ultraGridColumn12.Header.VisiblePosition = 35;
+            ultraGridColumn16.Header.VisiblePosition = 36;
+            ultraGridColumn17.Header.VisiblePosition = 37;
+            ultraGridColumn18.Header.VisiblePosition = 38;
+            ultraGridColumn19.Header.VisiblePosition = 39;
+            ultraGridColumn24.Header.VisiblePosition = 40;
             ultraGridBand1.Columns.AddRange(new object[] {
             ultraGridColumn13,
             ultraGridColumn14,
@@ -692,7 +769,13 @@
             ultraGridColumn8,
             ultraGridColumn10,
             ultraGridColumn9,
-            ultraGridColumn11});
+            ultraGridColumn11,
+            ultraGridColumn12,
+            ultraGridColumn16,
+            ultraGridColumn17,
+            ultraGridColumn18,
+            ultraGridColumn19,
+            ultraGridColumn24});
             this.grdDataCalendar.DisplayLayout.BandsSerializer.Add(ultraGridBand1);
             this.grdDataCalendar.DisplayLayout.InterBandSpacing = 10;
             this.grdDataCalendar.DisplayLayout.MaxColScrollRegions = 1;
@@ -1063,14 +1146,14 @@
             this.btnAgregarExamen,
             this.verExamenesAdicionalesToolStripMenuItem});
             this.contextMenuStrip2.Name = "contextMenuStrip1";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(211, 92);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(210, 92);
             // 
             // btnRemoverEsamen
             // 
             this.btnRemoverEsamen.Enabled = false;
             this.btnRemoverEsamen.Image = ((System.Drawing.Image)(resources.GetObject("btnRemoverEsamen.Image")));
             this.btnRemoverEsamen.Name = "btnRemoverEsamen";
-            this.btnRemoverEsamen.Size = new System.Drawing.Size(210, 22);
+            this.btnRemoverEsamen.Size = new System.Drawing.Size(209, 22);
             this.btnRemoverEsamen.Text = "Remover Examen";
             this.btnRemoverEsamen.Click += new System.EventHandler(this.btnRemoverEsamen_Click);
             // 
@@ -1079,21 +1162,21 @@
             this.btnMedicoTratante.Enabled = false;
             this.btnMedicoTratante.Image = global::SAMBHS.Windows.WinClient.UI.Properties.Resources.user_suit_black;
             this.btnMedicoTratante.Name = "btnMedicoTratante";
-            this.btnMedicoTratante.Size = new System.Drawing.Size(210, 22);
+            this.btnMedicoTratante.Size = new System.Drawing.Size(209, 22);
             this.btnMedicoTratante.Text = "Medico Tratante";
             this.btnMedicoTratante.Click += new System.EventHandler(this.btnMedicoTratante_Click);
             // 
             // btnAgregarExamen
             // 
             this.btnAgregarExamen.Name = "btnAgregarExamen";
-            this.btnAgregarExamen.Size = new System.Drawing.Size(210, 22);
+            this.btnAgregarExamen.Size = new System.Drawing.Size(209, 22);
             this.btnAgregarExamen.Text = "Agregar Examen";
             this.btnAgregarExamen.Click += new System.EventHandler(this.btnAgregarExamen_Click);
             // 
             // verExamenesAdicionalesToolStripMenuItem
             // 
             this.verExamenesAdicionalesToolStripMenuItem.Name = "verExamenesAdicionalesToolStripMenuItem";
-            this.verExamenesAdicionalesToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.verExamenesAdicionalesToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.verExamenesAdicionalesToolStripMenuItem.Text = "Ver Examenes Adicionales";
             this.verExamenesAdicionalesToolStripMenuItem.Click += new System.EventHandler(this.verExamenesAdicionalesToolStripMenuItem_Click);
             // 
@@ -1360,27 +1443,50 @@
             this.label14.TabIndex = 92;
             this.label14.Text = "Tipo ESO";
             // 
-            // btnCorrelativo
+            // ultraDataSource1
             // 
-            this.btnCorrelativo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCorrelativo.BackColor = System.Drawing.SystemColors.Control;
-            this.btnCorrelativo.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-            this.btnCorrelativo.FlatAppearance.MouseDownBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.btnCorrelativo.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.btnCorrelativo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCorrelativo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCorrelativo.ForeColor = System.Drawing.Color.Black;
-            this.btnCorrelativo.Image = global::SAMBHS.Windows.WinClient.UI.Properties.Resources.script_gear;
-            this.btnCorrelativo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCorrelativo.Location = new System.Drawing.Point(484, 417);
-            this.btnCorrelativo.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCorrelativo.Name = "btnCorrelativo";
-            this.btnCorrelativo.Size = new System.Drawing.Size(130, 25);
-            this.btnCorrelativo.TabIndex = 111;
-            this.btnCorrelativo.Text = "Correlativo HC";
-            this.btnCorrelativo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCorrelativo.UseVisualStyleBackColor = false;
-            this.btnCorrelativo.Click += new System.EventHandler(this.btnCorrelativo_Click);
+            this.ultraDataSource1.Band.Columns.AddRange(new object[] {
+            ultraDataColumn1,
+            ultraDataColumn2,
+            ultraDataColumn3,
+            ultraDataColumn4,
+            ultraDataColumn5,
+            ultraDataColumn6,
+            ultraDataColumn7,
+            ultraDataColumn8,
+            ultraDataColumn9,
+            ultraDataColumn10,
+            ultraDataColumn11,
+            ultraDataColumn12,
+            ultraDataColumn13,
+            ultraDataColumn14,
+            ultraDataColumn15,
+            ultraDataColumn16,
+            ultraDataColumn17,
+            ultraDataColumn18,
+            ultraDataColumn19,
+            ultraDataColumn20,
+            ultraDataColumn21,
+            ultraDataColumn22,
+            ultraDataColumn23,
+            ultraDataColumn24,
+            ultraDataColumn25,
+            ultraDataColumn26,
+            ultraDataColumn27,
+            ultraDataColumn28,
+            ultraDataColumn29,
+            ultraDataColumn30,
+            ultraDataColumn31,
+            ultraDataColumn32,
+            ultraDataColumn33,
+            ultraDataColumn34,
+            ultraDataColumn35,
+            ultraDataColumn36,
+            ultraDataColumn37,
+            ultraDataColumn38,
+            ultraDataColumn39,
+            ultraDataColumn40,
+            ultraDataColumn41});
             // 
             // frmBandejaAgenda
             // 
@@ -1407,6 +1513,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ultraDataSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1481,5 +1588,6 @@
         private System.Windows.Forms.ToolStripMenuItem continuarServicioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnMedicoTratante;
         private System.Windows.Forms.Button btnCorrelativo;
+        private Infragistics.Win.UltraWinDataSource.UltraDataSource ultraDataSource1;
     }
 }
