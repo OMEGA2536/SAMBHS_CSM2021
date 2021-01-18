@@ -553,7 +553,8 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI
                             "   CASE WHEN systu.v_UserName IS NULL THEN '- - -' ELSE systu.v_UserName END AS 'VENDEDOR' ,    " +
                             "   CASE WHEN vent.v_IdVenta IS NULL THEN '0.00' ELSE vent.d_Total END AS 'IMPORTE',  " +
                             "   CASE WHEN hisc.v_nroHistoria IS NULL THEN '- - -' ELSE hisc.v_nroHistoria END AS 'HISTORIA' , " +
-                            " CASE WHEN d.v_ComprobantePago IS NULL THEN '- - -' ELSE d.v_ComprobantePago END AS 'COMPROBANTE' "+
+                            " CASE WHEN d.v_ComprobantePago IS NULL THEN '- - -' ELSE d.v_ComprobantePago END AS 'COMPROBANTE' , "+
+                            " e.v_Name as 'PROTOCOLO' " +
                             "FROM calendar a "+
                             "INNER JOIN systemuser z on a.i_InsertUserId = z.i_SystemUserId " +
                             "INNER JOIN person b on a.v_PersonId = b.v_PersonId "+
@@ -2351,11 +2352,12 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI
                         foreach (var t in components)
                         {
                             var componentId = t.ComponentId;
-                            frmPopUp_MedicoTratante frm = new frmPopUp_MedicoTratante(t.ComponentName);
-                            frm.ShowDialog();
+                            //frmPopUp_MedicoTratante frm = new frmPopUp_MedicoTratante(t.ComponentName);
+                            //frm.ShowDialog();
                             
                             oServiceComponentDto.ComponentName = t.ComponentName;
-                            oServiceComponentDto.i_MedicoTratanteId = frm.MedicoTratanteId;
+                            //oServiceComponentDto.i_MedicoTratanteId = frm.MedicoTratanteId;
+                            oServiceComponentDto.i_MedicoTratanteId = oServiceDto.MedicoTratanteId;
                             oServiceComponentDto.ServiceId = serviceId;
                             oServiceComponentDto.ExternalInternalId = (int)ComponenteProcedencia.Interno;
                             oServiceComponentDto.ServiceComponentTypeId = t.ComponentTypeId;

@@ -1707,7 +1707,9 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
                           _AgendaDtoNew2.HISTORIA = item3.HISTORIA;
                           _AgendaDtoNew2.IMPORTE = item3.IMPORTE;
                           _AgendaDtoNew2.VENDEDOR = item3.VENDEDOR;
+                          _AgendaDtoNew2.PROTOCOLO = item3.PROTOCOLO;
                           _AgendaDtoNew2LIst.Add(_AgendaDtoNew2);
+                        
                     }
                     _AgendaDtoNew1.AgendaDtoNewList2 = _AgendaDtoNew2LIst;
                     _AgendaDtoNew1LIst.Add(_AgendaDtoNew1);
@@ -1829,7 +1831,7 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
                                 hoja.Cells[fila + i, 4] = item2.v_Pacient.Trim();
                                 hoja.Cells[fila + i, 5] = item2.i_Edad.ToString() + " A.";
                                 hoja.Cells[fila + i, 6] = item2.HISTORIA;
-                                hoja.Cells[fila + i, 7] = "- - -";
+                                hoja.Cells[fila + i, 7] = item2.PROTOCOLO;
                                 hoja.Cells[fila + i, 8] = item2.IMPORTE;
                                 hoja.Cells[fila + i, 9] = item2.VENDEDOR;
                                 total += decimal.Parse(item2.IMPORTE.ToString());

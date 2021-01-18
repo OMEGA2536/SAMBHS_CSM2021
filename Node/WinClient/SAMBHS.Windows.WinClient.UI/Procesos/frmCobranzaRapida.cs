@@ -17,6 +17,7 @@ using SAMBHS.Common.BL;
 using SAMBHS.Common.DataModel;
 using SAMBHS.Requerimientos.NBS;
 using SAMBHS.Windows.WinClient.UI.Requerimientos.NotariaBecerraSosaya;
+using SAMBHS.Venta.BL;
 
 
 namespace SAMBHS.Windows.WinClient.UI.Procesos
@@ -47,7 +48,13 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
         #region Temporales Detalles de Cobranza
         List<cobranzadetalleDto> _TempDetalle_AgregarDto = new List<cobranzadetalleDto>();
         #endregion
-
+        VentaBL _objVentasBL = new VentaBL();
+        decimal montoPago = 0;
+        ventadetalleDto _ventadetalleDto = new ventadetalleDto();
+        List<ventadetalleDto> _TempDetalle_AgregarDtoVent = new List<ventadetalleDto>();
+        List<ventadetalleDto> _TempDetalle_ModificarDto = new List<ventadetalleDto>();
+        List<ventadetalleDto> _TempDetalle_EliminarDto = new List<ventadetalleDto>();
+        List<KeyValueDTO> ListaVendedores = new List<KeyValueDTO>();
         /// <summary>
         /// 
         /// </summary>
@@ -220,6 +227,109 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
                         
                         strIdCobranza = _cobranzaDto.v_IdCobranza;
                         UltraStatusbarManager.Mensaje(ultraStatusBar1, "Cobranza Guardada Correctamente", timer1);
+                        if (checkPagoCuota.Checked == true)
+                        {
+                            //string Correlativo = _objDocumentoBL.CorrelativoxSerie(int.Parse(cboDocumento.Value.ToString()), txtSerieDoc.Text);
+                            string Correlativo = _objDocumentoBL.CorrelativoxSerie(503, "ICA");
+                            var correlativoFinal = new VentaBL().getVentaFinal("");
+                            //while (_objVentasBL.ExisteNroRegistro(txtPeriodo.Text, txtMes.Text, txtCorrelativo.Text) == false)
+                            //{
+                            //    txtCorrelativo.Text = (int.Parse(txtCorrelativo.Text) + 1).ToString("00000000");
+                            //}
+
+                            if (_objVentasBL.ExisteNroRegistro(txtPeriodo.Text, txtMes.Text, correlativoFinal.v_Correlativo) == false)
+                            {
+                                txtCorrelativo.Text = (int.Parse(correlativoFinal.v_Correlativo) + 1).ToString("00000000");
+
+                            }
+                            while (_objVentasBL.ExisteDocumento(503, "ICA", Correlativo) == false)
+                            {
+                                Correlativo = (int.Parse(Correlativo) + 1).ToString("00000000");
+                            }
+                            int i;
+                            string comprobante = "";
+                            var _getVentaDTo = new VentaBL().getVentaDTo(ref objOperationResult, _IdVenta); 
+                            comprobante = _getVentaDTo.v_SerieDocumento + "-" + _getVentaDTo.v_CorrelativoDocumento;
+                            #region Guarda Entidad Venta
+                            _ventaDto.i_IdMoneda = 1;
+                            _ventaDto.v_Mes = int.Parse(txtMes.Text.Trim()).ToString("00");
+                            _ventaDto.v_Periodo = txtPeriodo.Text.Trim();
+                            _ventaDto.v_Correlativo = txtCorrelativo.Text;
+                            _ventaDto.d_Anticipio = 0;
+                            _ventaDto.d_IGV = montoPago - (montoPago / (decimal)1.18);
+                            _ventaDto.d_TipoCambio = _tipoCambioVenta;
+                            _ventaDto.d_Total = montoPago;
+                            _ventaDto.d_Valor = montoPago / (decimal)1.18;
+                            _ventaDto.d_ValorVenta = montoPago / (decimal)1.18;
+                            _ventaDto.i_DeduccionAnticipio = 0;
+                            _ventaDto.i_EsAfectoIgv = 0;
+                            _ventaDto.t_FechaRef = DateTime.Today;
+                            _ventaDto.t_FechaVencimiento = dtpFechaRegistro.Value;
+                            _ventaDto.t_FechaRegistro = dtpFechaRegistro.Value;
+                            _ventaDto.i_IdCondicionPago = 1; //contado, credito, 
+                            _ventaDto.i_IdEstablecimiento = 1;
+                            _ventaDto.i_IdEstado = 1;
+                            _ventaDto.i_IdIgv = 1; //evaluar
+                            _ventaDto.i_IdMoneda = 1;          //
+                            _ventaDto.i_IdTipoDocumento = 503;
+                            _ventaDto.i_IdTipoDocumentoRef = -1;
+                            _ventaDto.i_PreciosIncluyenIgv = 1;
+                            _ventaDto.v_CorrelativoDocumentoRef = string.Empty;
+                            _ventaDto.v_Mes = txtMes.Text;
+                            _ventaDto.v_Periodo = txtPeriodo.Text;
+                            _ventaDto.v_SerieDocumento = "ICA";
+                            _ventaDto.v_CorrelativoDocumento = Correlativo;
+                            _ventaDto.v_CorrelativoDocumentoFin = string.Empty;
+                            _ventaDto.v_Concepto = "ABONO DE DEUDA SALDO PENDIENTE - COMPROBANTE: " + comprobante;
+                            _ventaDto.v_SerieDocumentoRef = string.Empty;
+                            _ventaDto.d_PorcDescuento = 0;
+                            _ventaDto.d_PocComision = 0;
+                            _ventaDto.d_Descuento = 0;
+                            _ventaDto.v_BultoDimensiones = string.Empty;
+                            _ventaDto.v_NroGuiaRemisionCorrelativo = string.Empty;
+                            _ventaDto.v_NroGuiaRemisionSerie = string.Empty;
+                            _ventaDto.d_IGV = montoPago - (montoPago / (decimal)1.18);
+                            _ventaDto.v_Marca = string.Empty;
+                            _ventaDto.v_NroBulto = string.Empty;
+                            _ventaDto.i_NroDias = 0;
+                            _ventaDto.v_NroPedido = string.Empty;
+                            _ventaDto.v_OrdenCompra = string.Empty;
+                            _ventaDto.d_PesoBrutoKG = 0;
+                            _ventaDto.d_PesoNetoKG = 0;
+                            _ventaDto.t_FechaOrdenCompra = DateTime.Today;
+                            _ventaDto.i_IdMedioPagoVenta = -1;
+                            _ventaDto.i_IdPuntoDestino = -1;
+                            _ventaDto.i_IdPuntoEmbarque = -1;
+                            _ventaDto.i_IdTipoEmbarque = -1;
+                            _ventaDto.i_IdTipoDocumentoRef = -1;
+                            _ventaDto.v_SerieDocumentoRef = _IdVenta.Split('-')[0];
+                            _ventaDto.v_CorrelativoDocumentoRef = _IdVenta.Split('-')[1];
+                            _ventaDto.i_IdTipoOperacion = 1;
+                            _ventaDto.i_IdTipoNota = -1;
+                            _ventaDto.i_IdTipoVenta = 3; //int.Parse(cboTipoVenta.Value.ToString());
+                            _ventaDto.i_DrawBack = 0;
+                            _ventaDto.v_IdVendedor = Globals.ClientSession.GetAsList()[2];
+                            _ventaDto.v_IdVendedorRef = "-1";
+                            _ventaDto.v_NombreClienteTemporal = _getVentaDTo.v_NombreClienteTemporal;
+                            _ventaDto.v_IdCliente = _getVentaDTo.v_IdCliente;
+                            //_ventaDto.v_DireccionClienteTemporal = _ventaDto.v_IdCliente == "N002-CL000000000" ? txtDireccion.Text : string.Empty;
+                            _ventaDto.v_DireccionClienteTemporal = _getVentaDTo.v_DireccionClienteTemporal;
+                            _ventaDto.NombreCliente = _getVentaDTo.v_NombreClienteTemporal;
+                            _ventaDto.i_FacturacionCliente = 1;
+                            _ventaDto.v_SigesoftServiceId = "";
+                            _ventaDto.i_ClienteEsAgente = 2;
+                            LlenarTemporalesVenta(comprobante);
+                            string idVentaGuardada = "";
+                            _ventaDto.v_IdVenta = idVentaGuardada = _objVentasBL.InsertarVenta(ref objOperationResult, _ventaDto, Globals.ClientSession.GetAsList(), _TempDetalle_AgregarDtoVent);
+
+                            new CobranzaBL().RealizaCobranzaAlContado(ref objOperationResult,
+                            1, 1, "ABONO DE DEUDA SALDO PENDIENTE", montoPago, idVentaGuardada,
+                            DateTime.Now, _tipoCambioVenta);
+
+                            UltraStatusbarManager.Mensaje(ultraStatusBar1, "Venta guardada correctamente!", timer1);
+                            #endregion
+
+                        }
                         btnGuardar.Enabled = false;
                         btnImprimir.Enabled = true;
                         panel1.Enabled = false;
@@ -285,12 +395,117 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
 
 
                 }
+
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
            
+        }
+
+        private void LlenarTemporalesVenta(string comprobante)
+        {
+            if (grdData.Rows.Count() != 0)
+            {
+                var objOperationResult = new OperationResult();
+                var centroCosto = _objVentasBL.CentroCostoDeEstablecimiento(ref objOperationResult);
+                foreach (UltraGridRow Fila in grdData.Rows)
+                {
+                    switch (Fila.Cells["i_RegistroTipo"].Value.ToString())
+                    {
+                        case "Temporal":
+                            if (Fila.Cells["i_RegistroEstado"].Value.ToString() == "Modificado")
+                            {
+                                _ventadetalleDto = new ventadetalleDto();
+                                _ventadetalleDto.v_IdVenta = _ventaDto.v_IdVenta;
+                                _ventadetalleDto.d_Descuento = 0;
+                                _ventadetalleDto.i_InsertaIdUsuario = int.Parse(Globals.ClientSession.GetAsList()[2]);
+                                _ventadetalleDto.i_IdTipoOperacion = 1;
+                                _ventadetalleDto.i_NroUnidades =0;
+                                _ventadetalleDto.d_PorcentajeComision = 0 ;
+                                _ventadetalleDto.i_NroUnidades = 0;
+                                _ventadetalleDto.v_Observaciones = "ABONO DE DEUDA SALDO PENDIENTE - COMPROBANTE: " + comprobante;
+                                _ventadetalleDto.v_PedidoExportacion =  null ;
+                                _ventadetalleDto.v_FacturaRef =  null ;
+                                //_ventadetalleDto.EsServicio = Fila.Cells["i_EsServicio"].Value == null | Fila.Cells["i_EsServicio"].Value.ToString() == "0" ? 0 : 1;
+                                _ventadetalleDto.d_Percepcion = 0;
+                                _ventadetalleDto.d_PrecioContraparte = 0;
+                                _ventadetalleDto.v_NroLote = null ;
+                                _ventadetalleDto.t_FechaCaducidad =  null;
+                                _ventadetalleDto.i_Anticipio = 0;
+                                _ventadetalleDto.i_IdAlmacen = 1;
+                                _ventadetalleDto.i_IdCentroCosto = "0";
+                                _ventadetalleDto.i_IdUnidadMedida = 15;
+                                _ventadetalleDto.ProductoNombre = "";
+                                _ventadetalleDto.v_DescripcionProducto = "ABONO DE DEUDA SALDO PENDIENTE - COMPROBANTE: " + comprobante;
+                                _ventadetalleDto.v_IdProductoDetalle = "N001-PE000015780";
+                                _ventadetalleDto.v_NroCuenta = string.Empty;
+                                _ventadetalleDto.d_PrecioVenta = montoPago;
+                                _ventadetalleDto.d_Igv = montoPago - (montoPago / (decimal)1.18);
+                                _ventadetalleDto.d_Cantidad = 1;
+                                _ventadetalleDto.d_CantidadEmpaque = 1;
+                                _ventadetalleDto.d_Precio = 0;
+                                _ventadetalleDto.d_Valor = montoPago / (decimal)1.18;
+                                _ventadetalleDto.d_ValorVenta = montoPago / (decimal)1.18;
+                                _ventadetalleDto.d_PrecioImpresion = 0;
+                                _ventadetalleDto.v_CodigoInterno = "ATMD01";
+                                _ventadetalleDto.Empaque = 1;
+                                _ventadetalleDto.UMEmpaque = "UND";
+                                _ventadetalleDto.i_EsServicio = 1;
+                                _ventadetalleDto.i_IdUnidadMedidaProducto = 15;
+                                _ventadetalleDto.v_ServiceId = "";
+                                _ventadetalleDto.EmpresaFacturacion = "";
+                                _ventadetalleDto.RucEmpFacturacion = "";
+                                _TempDetalle_AgregarDtoVent.Add(_ventadetalleDto);
+                            }
+                            break;
+
+                        case "NoTemporal":
+                            if (Fila.Cells["i_RegistroEstado"].Value != null && Fila.Cells["i_RegistroEstado"].Value.ToString() == "Modificado")
+                            {
+                                _ventadetalleDto = new ventadetalleDto();
+                                _ventadetalleDto.v_IdVentaDetalle = Fila.Cells["v_IdVentaDetalle"].Value == null ? null : Fila.Cells["v_IdVentaDetalle"].Value.ToString();
+                                _ventadetalleDto.v_IdMovimientoDetalle = Fila.Cells["v_IdMovimientoDetalle"].Value == null ? null : Fila.Cells["v_IdMovimientoDetalle"].Value.ToString();
+                                _ventadetalleDto.v_IdVenta = Fila.Cells["v_IdVenta"].Value == null ? null : Fila.Cells["v_IdVenta"].Value.ToString();
+                                _ventadetalleDto.v_IdProductoDetalle = Fila.Cells["v_IdProductoDetalle"].Value == null ? null : Fila.Cells["v_IdProductoDetalle"].Value.ToString();
+                                _ventadetalleDto.i_IdUnidadMedida = Fila.Cells["i_IdUnidadMedida"].Value == null ? 0 : int.Parse(Fila.Cells["i_IdUnidadMedida"].Value.ToString());
+                                _ventadetalleDto.i_IdAlmacen = Fila.Cells["i_IdAlmacen"].Value == null ? 0 : int.Parse(Fila.Cells["i_IdAlmacen"].Value.ToString());
+                                _ventadetalleDto.d_Precio = Fila.Cells["d_Precio"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_Precio"].Value.ToString());
+                                _ventadetalleDto.d_ValorVenta = Fila.Cells["d_ValorVenta"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_ValorVenta"].Value.ToString());
+                                _ventadetalleDto.d_Cantidad = Fila.Cells["d_Cantidad"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_Cantidad"].Value.ToString());
+                                _ventadetalleDto.d_Igv = Fila.Cells["d_Igv"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_Igv"].Value.ToString());
+                                _ventadetalleDto.d_Descuento = Fila.Cells["d_Descuento"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_Descuento"].Value.ToString());
+                                _ventadetalleDto.d_Valor = Fila.Cells["d_Valor"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_Valor"].Value.ToString());
+                                _ventadetalleDto.d_PrecioVenta = Fila.Cells["d_PrecioVenta"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_PrecioVenta"].Value.ToString());
+                                _ventadetalleDto.i_Anticipio = Fila.Cells["i_Anticipio"].Value == null ? 0 : int.Parse(Fila.Cells["i_Anticipio"].Value.ToString());
+                                _ventadetalleDto.i_InsertaIdUsuario = Fila.Cells["i_InsertaIdUsuario"].Value == null ? 0 : int.Parse(Fila.Cells["i_InsertaIdUsuario"].Value.ToString());
+                                _ventadetalleDto.v_NroCuenta = Fila.Cells["v_NroCuenta"].Value == null ? null : Fila.Cells["v_NroCuenta"].Value.ToString().Trim();
+                                _ventadetalleDto.i_IdCentroCosto = centroCosto ?? string.Empty;
+                                _ventadetalleDto.i_IdTipoOperacion = Fila.Cells["i_IdTipoOperacion"].Value == null ? 0 : int.Parse(Fila.Cells["i_IdTipoOperacion"].Value.ToString());
+                                _ventadetalleDto.i_NroUnidades = Fila.Cells["i_NroUnidades"].Value == null ? 0 : int.Parse(Fila.Cells["i_NroUnidades"].Value.ToString());
+                                _ventadetalleDto.d_PorcentajeComision = Fila.Cells["d_PorcentajeComision"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_PorcentajeComision"].Value.ToString());
+                                _ventadetalleDto.i_NroUnidades = Fila.Cells["i_NroUnidades"].Value == null ? 0 : int.Parse(Fila.Cells["i_NroUnidades"].Value.ToString());
+                                _ventadetalleDto.v_Observaciones = Fila.Cells["v_Observaciones"].Value == null ? null : Fila.Cells["v_Observaciones"].Value.ToString();
+                                _ventadetalleDto.v_PedidoExportacion = Fila.Cells["v_PedidoExportacion"].Value == null ? null : Fila.Cells["v_PedidoExportacion"].Value.ToString();
+                                _ventadetalleDto.v_FacturaRef = Fila.Cells["v_FacturaRef"].Value == null ? null : Fila.Cells["v_FacturaRef"].Value.ToString();
+                                _ventadetalleDto.v_DescripcionProducto = Fila.Cells["v_DescripcionProducto"].Value == null ? null : Fila.Cells["v_DescripcionProducto"].Value.ToString();
+                                _ventadetalleDto.i_Eliminado = int.Parse(Fila.Cells["i_Eliminado"].Value.ToString());
+                                _ventadetalleDto.i_InsertaIdUsuario = int.Parse(Fila.Cells["i_InsertaIdUsuario"].Value.ToString());
+                                _ventadetalleDto.t_InsertaFecha = Convert.ToDateTime(Fila.Cells["t_InsertaFecha"].Value);
+                                _ventadetalleDto.d_Percepcion = Fila.Cells["d_Percepcion"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_Percepcion"].Value.ToString());
+                                _ventadetalleDto.d_CantidadEmpaque = Fila.Cells["d_CantidadEmpaque"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_CantidadEmpaque"].Value.ToString());
+                                _ventadetalleDto.d_PrecioContraparte = Fila.Cells["d_PrecioContraparte"].Value == null ? 0 : decimal.Parse(Fila.Cells["d_PrecioContraparte"].Value.ToString());
+                                _ventadetalleDto.v_NroLote = Fila.Cells["v_NroLote"].Value == null ? null : Fila.Cells["v_NroLote"].Value.ToString();
+                                _ventadetalleDto.t_FechaCaducidad = Fila.Cells["t_FechaCaducidad"].Value == null ? (DateTime?)null : (DateTime?)Fila.Cells["t_FechaCaducidad"].Value;
+                                _TempDetalle_ModificarDto.Add(_ventadetalleDto);
+                            }
+                            break;
+                    }
+                }
+            }
+
         }
 
         private void LlenarTemporalesCobranza(string FormaPago)
@@ -358,6 +573,7 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
 
             if (!string.IsNullOrEmpty(txtMonto.Text.Trim()))
             {
+                montoPago = decimal.Parse(txtMonto.Text.ToString());
                 var montoEquivalente = DevuelveMontoPorCobrar(_idMonedaCobranza, _ventaDto.i_IdMoneda.Value, decimal.Parse(txtMonto.Text));
                 if (montoEquivalente <= 0)
                 {
@@ -374,8 +590,10 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
 
                 if (grdData.Rows.Any(fila => fila.Cells["FormaPago"].Value.ToString() == cboFormaPago.Text))
                 {
+
                     txtMonto.Clear();
                     CalcularTotales();
+                    montoPago = decimal.Parse(txtMonto.Text.ToString());
                     if (txtSaldo.Text != _ventaDto.SaldoPendiente.ToString()) txtMonto.Focus();
                     btnCobrar.Enabled = false;
                     CalcularValoresDetalle();

@@ -64,6 +64,7 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI.Dtos
         public string IMPORTE { get; set; }
         public string HISTORIA { get; set; }
         public string COMPROBANTE { get; set; }
+        public string PROTOCOLO { get; set; }
 
         public List<AgendaDtoNew1> AgendaDtoNewList1 { get; set; }
     }
@@ -95,5 +96,6 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI.Dtos
         public string HISTORIA { get; set; }
         public string COMPROBANTE { get; set; }
         public DateTime? d_DateTimeCalendar { get; set; }
+        public string PROTOCOLO { get; set; }
     }
 }
