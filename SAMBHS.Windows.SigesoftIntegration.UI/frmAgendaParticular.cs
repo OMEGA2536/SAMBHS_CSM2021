@@ -19,6 +19,7 @@ using SAMBHS.Windows.SigesoftIntegration.UI.Reports;
 using SAMBHS.Windows.WinClient.UI.Procesos;
 using SAMBHS.Common.BE;
 using SAMBHS.Common.DataModel;
+using System.Net;
 
 namespace SAMBHS.Windows.WinClient.UI
 {
@@ -454,6 +455,7 @@ namespace SAMBHS.Windows.WinClient.UI
             try
             {
                 //ObtenerDatosDNI(txtSearchNroDocument.Text.Trim());
+                System.Net.ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
                 var urlEssalud = "http://ww1.essalud.gob.pe/sisep/postulante/postulante/postulante_obtenerDatosPostulante.htm?strDni=" + txtSearchNroDocument.Text.Trim();
 
                 System.Net.WebClient wcEssalud = new System.Net.WebClient();
@@ -481,6 +483,7 @@ namespace SAMBHS.Windows.WinClient.UI
                 else
                 {
                     //var urlReniec = "https ://dniruc.apisperu.com/api/v1/dni/" + txtSearchNroDocument.Text.Trim() + "?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVkdWFyZG9xYzE4M0BvdXRsb29rLmNvbSJ9.RVuS2_RQEowXN8om3Wx7ifm0I2gl01ck5_vH4HlG5Nw";
+                    System.Net.ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
                     var urlReniec = "https://api.reniec.cloud/dni/" + txtSearchNroDocument.Text.Trim();
 
                     System.Net.WebClient wcReniec = new System.Net.WebClient();
@@ -987,7 +990,18 @@ namespace SAMBHS.Windows.WinClient.UI
                 else
                 {
                     var ProtPerId = AgendarServicio(Globals.ClientSession.GetAsList());
-                    Close();
+                    var resp = MessageBox.Show("Se agendó correctamente.", "CONFIRMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    if (resp == DialogResult.OK)
+                    {
+                        this.Close();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
+
+                    //cierre = 1;
+                    //Close();
                 }
 
 

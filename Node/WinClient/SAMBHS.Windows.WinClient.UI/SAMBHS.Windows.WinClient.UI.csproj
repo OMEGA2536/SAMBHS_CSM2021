@@ -7213,7 +7213,9 @@
     <EmbeddedResource Include="SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Dataset\dsActaEntrega.xsc">
       <DependentUpon>dsActaEntrega.xsd</DependentUpon>
     </None>
