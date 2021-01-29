@@ -492,7 +492,7 @@ namespace SAMBHS.Venta.BL
                                                  ? (A.v_ApePaterno + " " + A.v_ApeMaterno + " " + A.v_PrimerNombre + " " +
                                                     A.v_RazonSocial).Trim()
                                                  : (n.v_NombreClienteTemporal != null && n.v_NombreClienteTemporal.Trim() != "") ? n.v_NombreClienteTemporal : "PÚBLICO GENERAL" : "",
-                                         d_Total = n.i_IdTipoDocumento == 500 || n.i_IdTipoDocumento == 501 || n.i_IdTipoDocumento == 502 || n.i_IdTipoDocumento == 503 ? -1*(n.d_Total) : n.d_Total,
+                                         d_Total = n.i_IdTipoDocumento == 500 || n.i_IdTipoDocumento == 501 || n.i_IdTipoDocumento == 502 ? -1*(n.d_Total) : n.d_Total,
                                          i_IdEstado = n.i_IdEstado,
                                          t_InsertaFecha = n.t_InsertaFecha,
                                          t_ActualizaFecha = n.t_ActualizaFecha,
@@ -577,7 +577,7 @@ namespace SAMBHS.Venta.BL
                                                  ? (A.v_ApePaterno + " " + A.v_ApeMaterno + " " + A.v_PrimerNombre + " " +
                                                     A.v_RazonSocial).Trim()
                                                  : (n.v_NombreClienteTemporal != null && n.v_NombreClienteTemporal.Trim() != "") ? n.v_NombreClienteTemporal : "PÚBLICO GENERAL" : "",
-                                         d_Total = n.i_IdTipoDocumento == 500 || n.i_IdTipoDocumento == 501 || n.i_IdTipoDocumento == 502 || n.i_IdTipoDocumento == 503 ? -1*(n.d_Total) : n.d_Total,
+                                         d_Total = n.i_IdTipoDocumento == 500 || n.i_IdTipoDocumento == 501 || n.i_IdTipoDocumento == 502 ? -1*(n.d_Total) : n.d_Total,
                                          i_IdEstado = n.i_IdEstado,
                                          t_InsertaFecha = n.t_InsertaFecha,
                                          t_ActualizaFecha = n.t_ActualizaFecha,
@@ -14188,6 +14188,66 @@ namespace SAMBHS.Venta.BL
             catch (Exception ex)
             {
                 result.Success = 0;
+                return null;
+            }
+        }
+
+        public ventaDto getVentaDTo(ref OperationResult result, string ventaId)
+        {
+            try
+            {
+                using (var context = new SAMBHSEntitiesModelWin())
+                {
+                    var venta = (from v in context.venta
+                                         where v.v_IdVenta == ventaId 
+                                         
+                                         select new ventaDto
+                                         {
+                                             v_IdVenta = v.v_IdVenta,
+                                             v_IdCliente = v.v_IdCliente,
+                                             
+                                             v_NombreClienteTemporal = v.v_NombreClienteTemporal,
+                                             v_DireccionClienteTemporal = v.v_DireccionClienteTemporal,
+                                             v_SerieDocumento = v.v_SerieDocumento,
+                                             v_CorrelativoDocumento = v.v_CorrelativoDocumento
+                                         }).FirstOrDefault();
+
+                    result.Success = 1;
+                    return venta;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = 0;
+                return null;
+            }
+        }
+
+        public ventaDto getVentaFinal(string a)
+        {
+            try
+            {
+                using (var context = new SAMBHSEntitiesModelWin())
+                {
+                    var venta = (from v in context.venta
+                                 orderby v.v_IdVenta descending
+                                 select new ventaDto
+                                 {
+                                     v_IdVenta = v.v_IdVenta,
+                                     v_IdCliente = v.v_IdCliente,
+
+                                     v_NombreClienteTemporal = v.v_NombreClienteTemporal,
+                                     v_DireccionClienteTemporal = v.v_DireccionClienteTemporal,
+                                     v_SerieDocumento = v.v_SerieDocumento,
+                                     v_CorrelativoDocumento = v.v_CorrelativoDocumento,
+                                     v_Correlativo = v.v_Correlativo,
+                                 }).FirstOrDefault();
+
+                    return venta;
+                }
+            }
+            catch (Exception ex)
+            {
                 return null;
             }
         }

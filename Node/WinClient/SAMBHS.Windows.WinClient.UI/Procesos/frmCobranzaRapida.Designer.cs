@@ -106,14 +106,15 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
             this.uvDatos = new Infragistics.Win.Misc.UltraValidator(this.components);
             this.ultraFormManager1 = new Infragistics.Win.UltraWinForm.UltraFormManager(this.components);
             this.frmCobranzaRapida_Fill_Panel = new Infragistics.Win.Misc.UltraPanel();
+            this.txtObservacion = new System.Windows.Forms.TextBox();
+            this.ultraLabel2 = new Infragistics.Win.Misc.UltraLabel();
             this.ultraStatusBar1 = new Infragistics.Win.UltraWinStatusBar.UltraStatusBar();
             this._frmCobranzaRapida_UltraFormManager_Dock_Area_Left = new Infragistics.Win.UltraWinForm.UltraFormDockArea();
             this._frmCobranzaRapida_UltraFormManager_Dock_Area_Right = new Infragistics.Win.UltraWinForm.UltraFormDockArea();
             this._frmCobranzaRapida_UltraFormManager_Dock_Area_Top = new Infragistics.Win.UltraWinForm.UltraFormDockArea();
             this._frmCobranzaRapida_UltraFormManager_Dock_Area_Bottom = new Infragistics.Win.UltraWinForm.UltraFormDockArea();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.ultraLabel2 = new Infragistics.Win.Misc.UltraLabel();
-            this.txtObservacion = new System.Windows.Forms.TextBox();
+            this.checkPagoCuota = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtSiglas)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtPeriodo)).BeginInit();
@@ -390,7 +391,7 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
             appearance12.TextHAlignAsString = "Center";
             this.txtMes.Appearance = appearance12;
             this.txtMes.Enabled = false;
-            this.txtMes.Location = new System.Drawing.Point(508, 10);
+            this.txtMes.Location = new System.Drawing.Point(462, 6);
             this.txtMes.Margin = new System.Windows.Forms.Padding(2);
             this.txtMes.MaxLength = 2;
             this.txtMes.Name = "txtMes";
@@ -445,7 +446,6 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.grdData.CausesValidation = false;
-            this.grdData.DataMember = null;
             appearance13.BackColor = System.Drawing.Color.White;
             this.grdData.DisplayLayout.Appearance = appearance13;
             ultraGridColumn13.CellActivation = Infragistics.Win.UltraWinGrid.Activation.NoEdit;
@@ -669,6 +669,7 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
             // 
             // frmCobranzaRapida_Fill_Panel.ClientArea
             // 
+            this.frmCobranzaRapida_Fill_Panel.ClientArea.Controls.Add(this.checkPagoCuota);
             this.frmCobranzaRapida_Fill_Panel.ClientArea.Controls.Add(this.txtObservacion);
             this.frmCobranzaRapida_Fill_Panel.ClientArea.Controls.Add(this.ultraLabel2);
             this.frmCobranzaRapida_Fill_Panel.ClientArea.Controls.Add(this.btnSalir);
@@ -683,6 +684,24 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
             this.frmCobranzaRapida_Fill_Panel.Name = "frmCobranzaRapida_Fill_Panel";
             this.frmCobranzaRapida_Fill_Panel.Size = new System.Drawing.Size(599, 278);
             this.frmCobranzaRapida_Fill_Panel.TabIndex = 0;
+            // 
+            // txtObservacion
+            // 
+            this.txtObservacion.Location = new System.Drawing.Point(351, 41);
+            this.txtObservacion.Name = "txtObservacion";
+            this.txtObservacion.Size = new System.Drawing.Size(237, 20);
+            this.txtObservacion.TabIndex = 200;
+            // 
+            // ultraLabel2
+            // 
+            this.ultraLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ultraLabel2.AutoSize = true;
+            this.ultraLabel2.ForeColor = System.Drawing.Color.Black;
+            this.ultraLabel2.Location = new System.Drawing.Point(277, 44);
+            this.ultraLabel2.Name = "ultraLabel2";
+            this.ultraLabel2.Size = new System.Drawing.Size(68, 14);
+            this.ultraLabel2.TabIndex = 199;
+            this.ultraLabel2.Text = "Observación";
             // 
             // ultraStatusBar1
             // 
@@ -739,23 +758,17 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
             this._frmCobranzaRapida_UltraFormManager_Dock_Area_Bottom.Name = "_frmCobranzaRapida_UltraFormManager_Dock_Area_Bottom";
             this._frmCobranzaRapida_UltraFormManager_Dock_Area_Bottom.Size = new System.Drawing.Size(615, 8);
             // 
-            // ultraLabel2
+            // checkPagoCuota
             // 
-            this.ultraLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ultraLabel2.AutoSize = true;
-            this.ultraLabel2.ForeColor = System.Drawing.Color.Black;
-            this.ultraLabel2.Location = new System.Drawing.Point(277, 44);
-            this.ultraLabel2.Name = "ultraLabel2";
-            this.ultraLabel2.Size = new System.Drawing.Size(68, 14);
-            this.ultraLabel2.TabIndex = 199;
-            this.ultraLabel2.Text = "Observación";
-            // 
-            // txtObservacion
-            // 
-            this.txtObservacion.Location = new System.Drawing.Point(351, 41);
-            this.txtObservacion.Name = "txtObservacion";
-            this.txtObservacion.Size = new System.Drawing.Size(237, 20);
-            this.txtObservacion.TabIndex = 200;
+            this.checkPagoCuota.AutoSize = true;
+            this.checkPagoCuota.Checked = true;
+            this.checkPagoCuota.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkPagoCuota.Location = new System.Drawing.Point(331, 258);
+            this.checkPagoCuota.Name = "checkPagoCuota";
+            this.checkPagoCuota.Size = new System.Drawing.Size(96, 17);
+            this.checkPagoCuota.TabIndex = 201;
+            this.checkPagoCuota.Text = "PAGO CUOTA";
+            this.checkPagoCuota.UseVisualStyleBackColor = true;
             // 
             // frmCobranzaRapida
             // 
@@ -846,5 +859,6 @@ namespace SAMBHS.Windows.WinClient.UI.Procesos
         private Infragistics.Win.Misc.UltraLabel ultraLabel1;
         private System.Windows.Forms.TextBox txtObservacion;
         private Infragistics.Win.Misc.UltraLabel ultraLabel2;
+        private System.Windows.Forms.CheckBox checkPagoCuota;
     }
 }

@@ -123,6 +123,8 @@
             this.dtDateCalendar = new System.Windows.Forms.DateTimePicker();
             this.label18 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.cboNivelEstudio = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
             this.gbDatosGenerales.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtNombreTitular)).BeginInit();
@@ -172,6 +174,8 @@
             // gbDatosGenerales
             // 
             this.gbDatosGenerales.BackColor = System.Drawing.SystemColors.Control;
+            this.gbDatosGenerales.Controls.Add(this.cboNivelEstudio);
+            this.gbDatosGenerales.Controls.Add(this.label24);
             this.gbDatosGenerales.Controls.Add(this.button2);
             this.gbDatosGenerales.Controls.Add(this.lblHistoriaClinica);
             this.gbDatosGenerales.Controls.Add(this.label23);
@@ -605,7 +609,7 @@
             // txtBirthPlace
             // 
             this.txtBirthPlace.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBirthPlace.Location = new System.Drawing.Point(414, 18);
+            this.txtBirthPlace.Location = new System.Drawing.Point(413, 38);
             this.txtBirthPlace.Margin = new System.Windows.Forms.Padding(2);
             this.txtBirthPlace.MaxLength = 100;
             this.txtBirthPlace.Name = "txtBirthPlace";
@@ -629,7 +633,7 @@
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(309, 21);
+            this.label8.Location = new System.Drawing.Point(308, 41);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(90, 13);
@@ -680,7 +684,7 @@
             // 
             // txtMail
             // 
-            this.txtMail.Location = new System.Drawing.Point(414, 42);
+            this.txtMail.Location = new System.Drawing.Point(413, 169);
             this.txtMail.Margin = new System.Windows.Forms.Padding(2);
             this.txtMail.MaxLength = 100;
             this.txtMail.Name = "txtMail";
@@ -692,7 +696,7 @@
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(309, 49);
+            this.label7.Location = new System.Drawing.Point(308, 176);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(32, 13);
@@ -1219,6 +1223,32 @@
             this.label10.TabIndex = 15;
             this.label10.Text = "Fecha";
             // 
+            // cboNivelEstudio
+            // 
+            this.cboNivelEstudio.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.cboNivelEstudio.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboNivelEstudio.DisplayMember = "Nombre";
+            this.cboNivelEstudio.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboNivelEstudio.FormattingEnabled = true;
+            this.cboNivelEstudio.Location = new System.Drawing.Point(413, 13);
+            this.cboNivelEstudio.Margin = new System.Windows.Forms.Padding(2);
+            this.cboNivelEstudio.Name = "cboNivelEstudio";
+            this.cboNivelEstudio.Size = new System.Drawing.Size(136, 21);
+            this.cboNivelEstudio.TabIndex = 164;
+            this.cboNivelEstudio.ValueMember = "EsoId";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.Color.Black;
+            this.label24.Location = new System.Drawing.Point(306, 17);
+            this.label24.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(89, 13);
+            this.label24.TabIndex = 163;
+            this.label24.Text = "Nivel de Estudios";
+            // 
             // frmAgendaParticular
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1338,5 +1368,7 @@
         private System.Windows.Forms.Button button2;
         private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         private Microsoft.VisualBasic.PowerPacks.RectangleShape rectangleShape1;
+        private System.Windows.Forms.ComboBox cboNivelEstudio;
+        private System.Windows.Forms.Label label24;
     }
 }

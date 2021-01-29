@@ -58,5 +58,44 @@ namespace SAMBHS.Windows.SigesoftIntegration.UI.Dtos
         public string v_CreationUser { get; set; }
         public string v_ComprobantePago { get; set; }
         public string v_NroLiquidacion { get; set; }
+        public string MEDICO { get; set; }
+        public string CONSULTORIO { get; set; }
+        public string VENDEDOR { get; set; }
+        public string IMPORTE { get; set; }
+        public string HISTORIA { get; set; }
+        public string COMPROBANTE { get; set; }
+        public string PROTOCOLO { get; set; }
+
+        public List<AgendaDtoNew1> AgendaDtoNewList1 { get; set; }
+    }
+
+    public class AgendaDtoNew1
+    {
+        public string v_Pacient { get; set; }
+        public string v_DocNumber { get; set; }
+        public string MEDICO { get; set; }
+        public string CONSULTORIO { get; set; }
+        public string VENDEDOR { get; set; }
+        public string IMPORTE { get; set; }
+        public string HISTORIA { get; set; }
+        public string COMPROBANTE { get; set; }
+
+        public List<AgendaDtoNew2> AgendaDtoNewList2 { get; set; }
+
+    }
+
+    public class AgendaDtoNew2
+    {
+        public string v_Pacient { get; set; }
+        public int i_Edad { get; set; }
+        public string v_DocNumber { get; set; }
+        public string MEDICO { get; set; }
+        public string CONSULTORIO { get; set; }
+        public string VENDEDOR { get; set; }
+        public string IMPORTE { get; set; }
+        public string HISTORIA { get; set; }
+        public string COMPROBANTE { get; set; }
+        public DateTime? d_DateTimeCalendar { get; set; }
+        public string PROTOCOLO { get; set; }
     }
 }

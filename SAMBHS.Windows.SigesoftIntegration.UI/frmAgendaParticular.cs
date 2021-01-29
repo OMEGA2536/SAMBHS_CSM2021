@@ -19,6 +19,7 @@ using SAMBHS.Windows.SigesoftIntegration.UI.Reports;
 using SAMBHS.Windows.WinClient.UI.Procesos;
 using SAMBHS.Common.BE;
 using SAMBHS.Common.DataModel;
+using System.Net;
 
 namespace SAMBHS.Windows.WinClient.UI
 {
@@ -66,6 +67,8 @@ namespace SAMBHS.Windows.WinClient.UI
         {
             using (new LoadingClass.PleaseWait(this.Location, "Generando..."))
             {
+                AgendaBl.LlenarComboNivelEstudio(cboNivelEstudio);
+
                 AgendaBl.LlenarComboTipoDocumento(cboTipoDocumento);
                 AgendaBl.LlenarComboGennero(cboGenero);
                 AgendaBl.LlenarComboEstadoCivil(cboEstadoCivil);
@@ -117,7 +120,10 @@ namespace SAMBHS.Windows.WinClient.UI
                 }
                 else
                 {
-                    ObtenerDatosDNI_New(_dni);
+                    //ObtenerDatosDNI_New(_dni);
+                    txtSearchNroDocument.Text = _dni;
+                    //btnBuscarTrabajador_Click(sender, e);
+                    BuscarAPI();
                     txtNroDocumento.Text = _dni;
 
                     int Correlativo = AgendaBl.GetNumeroHIstoriafinal();
@@ -129,28 +135,28 @@ namespace SAMBHS.Windows.WinClient.UI
                 switch (_tipoAtencion)
                 {
                     case 2:
-                    {
-                        cboTipoServicio.SelectedValue = 9;
-                        cboServicio.SelectedValue = 10;
-                        AgendaBl.LlenarComboProtocolo_Particular(cboProtocolo, int.Parse(cboServicio.SelectedValue.ToString()), int.Parse(cboTipoServicio.SelectedValue.ToString()), _empresa);
+                        {
+                            cboTipoServicio.SelectedValue = 9;
+                            cboServicio.SelectedValue = 10;
+                            AgendaBl.LlenarComboProtocolo_Particular(cboProtocolo, int.Parse(cboServicio.SelectedValue.ToString()), int.Parse(cboTipoServicio.SelectedValue.ToString()), _empresa);
 
-                        cboEmpresaFacturacion.SelectedValue = Constants.CLINICA_SAN_MARCOS;
-                        cboProtocolo.SelectedValue = _protocoloId;
-                        btnNuevoRegistro.Visible = false;
-                        txtNombreTitular.Visible = false;
-                        lblTitular.Visible = false;
-                        cboParentesco.Visible = false;
-                        lblParentesco.Visible = false;
-                    }
+                            cboEmpresaFacturacion.SelectedValue = Constants.CLINICA_SAN_MARCOS;
+                            cboProtocolo.SelectedValue = _protocoloId;
+                            btnNuevoRegistro.Visible = false;
+                            txtNombreTitular.Visible = false;
+                            lblTitular.Visible = false;
+                            cboParentesco.Visible = false;
+                            lblParentesco.Visible = false;
+                        }
                         break;
                     case 3:
-                    {
-                        cboTipoServicio.SelectedValue = 11;
-                        cboServicio.SelectedValue = 12;
-                        AgendaBl.LlenarComboProtocolo_Seguros(cboProtocolo, int.Parse(cboTipoServicio.SelectedValue.ToString()), int.Parse(cboServicio.SelectedValue.ToString()), _empresa, _contrata);
-                        btnNuevoRegistro.Visible = true;
-                        cboProtocolo.SelectedValue = _protocoloId;
-                    }
+                        {
+                            cboTipoServicio.SelectedValue = 11;
+                            cboServicio.SelectedValue = 12;
+                            AgendaBl.LlenarComboProtocolo_Seguros(cboProtocolo, int.Parse(cboTipoServicio.SelectedValue.ToString()), int.Parse(cboServicio.SelectedValue.ToString()), _empresa, _contrata);
+                            btnNuevoRegistro.Visible = true;
+                            cboProtocolo.SelectedValue = _protocoloId;
+                        }
                         break;
                 }
             }
@@ -159,21 +165,21 @@ namespace SAMBHS.Windows.WinClient.UI
                 switch (_tipoAtencion)
                 {
                     case 2:
-                    {
-                        cboTipoServicio.SelectedValue = 9;
-                        cboServicio.SelectedValue = 10;
-                        cboEmpresaFacturacion.SelectedValue = Constants.CLINICA_SAN_MARCOS;
-                        AgendaBl.LlenarComboProtocolo_Particular(cboProtocolo, int.Parse(cboServicio.SelectedValue.ToString()), int.Parse(cboTipoServicio.SelectedValue.ToString()), _empresa);
-                        cboProtocolo.SelectedValue = _protocoloId;
-                    }
+                        {
+                            cboTipoServicio.SelectedValue = 9;
+                            cboServicio.SelectedValue = 10;
+                            cboEmpresaFacturacion.SelectedValue = Constants.CLINICA_SAN_MARCOS;
+                            AgendaBl.LlenarComboProtocolo_Particular(cboProtocolo, int.Parse(cboServicio.SelectedValue.ToString()), int.Parse(cboTipoServicio.SelectedValue.ToString()), _empresa);
+                            cboProtocolo.SelectedValue = _protocoloId;
+                        }
                         break;
                     case 3:
-                    {
-                        cboTipoServicio.SelectedValue = 11;
-                        cboServicio.SelectedValue = 12;
-                        AgendaBl.LlenarComboProtocolo_Seguros(cboProtocolo, int.Parse(cboTipoServicio.SelectedValue.ToString()), int.Parse(cboServicio.SelectedValue.ToString()), _empresa, _contrata);
-                        cboProtocolo.SelectedValue = _protocoloId;
-                    }
+                        {
+                            cboTipoServicio.SelectedValue = 11;
+                            cboServicio.SelectedValue = 12;
+                            AgendaBl.LlenarComboProtocolo_Seguros(cboProtocolo, int.Parse(cboTipoServicio.SelectedValue.ToString()), int.Parse(cboServicio.SelectedValue.ToString()), _empresa, _contrata);
+                            cboProtocolo.SelectedValue = _protocoloId;
+                        }
                         break;
                 }
             }
@@ -203,14 +209,16 @@ namespace SAMBHS.Windows.WinClient.UI
         {
             try
             {
-                var urlEssalud = "http://ww1.essalud.gob.pe/sisep/postulante/postulante/postulante_obtenerDatosPostulante.htm?strDni=" + dni;
+                //ObtenerDatosDNI(txtSearchNroDocument.Text.Trim());
+                var urlEssalud = "http://ww1.essalud.gob.pe/sisep/postulante/postulante/postulante_obtenerDatosPostulante.htm?strDni=" + txtSearchNroDocument.Text.Trim();
 
                 System.Net.WebClient wcEssalud = new System.Net.WebClient();
 
                 var DataEssalud = wcEssalud.DownloadString(urlEssalud);
 
                 string validar = DataEssalud.Split(',', ':')[6].Replace("\"", "").Trim();
-                if (validar != "" && validar != null)
+                string validar2 = DataEssalud.Split('>', ' ')[0].Replace("<", "").Trim();
+                if ((validar != "" && validar != null) && validar2 != "html")
                 {
                     string[] desconcat = DataEssalud.Split(',', ':');
 
@@ -223,34 +231,36 @@ namespace SAMBHS.Windows.WinClient.UI
 
                     txtNroDocumento.Text = desconcat[2].Replace("\"", "").Trim();
                     dtpBirthdate.Value = DateTime.Parse(desconcat[8].Replace("\"", "").Trim());
-                    cboGenero.SelectedValue = desconcat[10].Replace("\"", "").Trim() == "3" ? "2" : desconcat[10].Replace("\"", "").Trim() == "2" ? "1" : "1";
-                    cboGenero.SelectedValue = "1";
-                    //_personId = null;
+                    cboGenero.SelectedValue = desconcat[10].Replace("\"", "").Trim() == "3" ? 2 : desconcat[10].Replace("\"", "").Trim() == "2" ? 1 : 1;
+                    _personId = null;
                 }
                 else
                 {
-                    var urlReniec = "https://dniruc.apisperu.com/api/v1/dni/" + txtSearchNroDocument.Text.Trim() + "?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVkdWFyZG9xYzE4M0BvdXRsb29rLmNvbSJ9.RVuS2_RQEowXN8om3Wx7ifm0I2gl01ck5_vH4HlG5Nw";
+                    //var urlReniec = "https ://dniruc.apisperu.com/api/v1/dni/" + txtSearchNroDocument.Text.Trim() + "?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVkdWFyZG9xYzE4M0BvdXRsb29rLmNvbSJ9.RVuS2_RQEowXN8om3Wx7ifm0I2gl01ck5_vH4HlG5Nw";
+                    var urlReniec = "https://api.reniec.cloud/dni/" + txtSearchNroDocument.Text.Trim();
 
                     System.Net.WebClient wcReniec = new System.Net.WebClient();
                     string DataReniec = wcReniec.DownloadString(urlReniec);
 
-                    if (DataReniec != null)
+                    if (DataReniec != null && DataReniec != "null")
                     {
                         string[] desconcat = DataReniec.Split(',', ':');
 
-                        txtNombres.Text = desconcat[3].Replace("\"", "").Trim();
+                        //txtNombres.Text = desconcat[3].Replace("\"", "").Trim();
+                        txtNombres.Text = desconcat[9].Replace("}", "").Replace("\"", "").Trim();
                         txtApellidoPaterno.Text = desconcat[5].Replace("\"", "").Trim();
                         txtApellidoMaterno.Text = desconcat[7].Replace("\"", "").Trim();
                         txtNroDocumento.Text = desconcat[1].Replace("\"", "").Trim();
-                        cboGenero.SelectedValue = "1";
-                        //_personId = null;
+                        _personId = null;
                     }
+
+
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 MessageBox.Show(@"Nro. de DNI incorrecto", @"Información");
-                throw;
+                //throw;
             }
         }
 
@@ -314,6 +324,7 @@ namespace SAMBHS.Windows.WinClient.UI
             txtNacionalidad.Text = datosTrabajador.Nacionalidad;
             txtReligion.Text = datosTrabajador.Religion;
 
+            cboNivelEstudio.SelectedValue = datosTrabajador.Estudios;
             FingerPrintTemplate = datosTrabajador.b_FingerPrintTemplate;
             FingerPrintImage = datosTrabajador.b_FingerPrintImage;
             RubricImage = datosTrabajador.b_RubricImage;
@@ -324,7 +335,7 @@ namespace SAMBHS.Windows.WinClient.UI
             txtNombreTitular.Text = datosTrabajador.titular;
             if (datosTrabajador.N_Historia == null)
             {
-                lblHistoriaClinica.Text = "- - -" ;
+                lblHistoriaClinica.Text = "- - -";
                 lblHistoriaClinica.ForeColor = Color.Red;
             }
             else
@@ -410,7 +421,7 @@ namespace SAMBHS.Windows.WinClient.UI
                 button2.Enabled = false;
             }
             var datosTrabajador = AgendaBl.GetDatosTrabajador(txtSearchNroDocument.Text);
-            
+
             if (datosTrabajador != null)
             {
                 Mode = "Edit";
@@ -428,16 +439,78 @@ namespace SAMBHS.Windows.WinClient.UI
             }
             else
             {
-                using (new LoadingClass.PleaseWait(this.Location, "Buscando..."))
-                {
-                    ObtenerDatosDNI_New(txtSearchNroDocument.Text.Trim());
-                }
-                
+                //using (new LoadingClass.PleaseWait(this.Location, "Buscando..."))
+                //{
+                //    ObtenerDatosDNI_New(txtSearchNroDocument.Text.Trim());
+                //}
+                BuscarAPI();
 
+
+
+            }
+        }
+
+        private void BuscarAPI()
+        {
+            try
+            {
+                //ObtenerDatosDNI(txtSearchNroDocument.Text.Trim());
+                System.Net.ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+                var urlEssalud = "http://ww1.essalud.gob.pe/sisep/postulante/postulante/postulante_obtenerDatosPostulante.htm?strDni=" + txtSearchNroDocument.Text.Trim();
+
+                System.Net.WebClient wcEssalud = new System.Net.WebClient();
+
+                var DataEssalud = wcEssalud.DownloadString(urlEssalud);
+
+                string validar = DataEssalud.Split(',', ':')[6].Replace("\"", "").Trim();
+                string validar2 = DataEssalud.Split('>', ' ')[0].Replace("<", "").Trim();
+                if ((validar != "" && validar != null) && validar2 != "html")
+                {
+                    string[] desconcat = DataEssalud.Split(',', ':');
+
+                    txtNombres.Text = desconcat[6].Replace("\"", "").Trim();
+                    txtApellidoPaterno.Text = desconcat[4].Replace("\"", "").Trim();
+
+                    txtApellidoMaterno.Text = desconcat[12].Replace("\"", "").Trim();
+                    txtApellidoMaterno.Text = txtApellidoMaterno.Text.Replace("}", "").Trim();
+                    txtApellidoMaterno.Text = txtApellidoMaterno.Text.Replace("]", "").Trim();
+
+                    txtNroDocumento.Text = desconcat[2].Replace("\"", "").Trim();
+                    dtpBirthdate.Value = DateTime.Parse(desconcat[8].Replace("\"", "").Trim());
+                    cboGenero.SelectedValue = desconcat[10].Replace("\"", "").Trim() == "3" ? 2 : desconcat[10].Replace("\"", "").Trim() == "2" ? 1 : 1;
+                    _personId = null;
+                }
+                else
+                {
+                    //var urlReniec = "https ://dniruc.apisperu.com/api/v1/dni/" + txtSearchNroDocument.Text.Trim() + "?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVkdWFyZG9xYzE4M0BvdXRsb29rLmNvbSJ9.RVuS2_RQEowXN8om3Wx7ifm0I2gl01ck5_vH4HlG5Nw";
+                    System.Net.ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+                    var urlReniec = "https://api.reniec.cloud/dni/" + txtSearchNroDocument.Text.Trim();
+
+                    System.Net.WebClient wcReniec = new System.Net.WebClient();
+                    string DataReniec = wcReniec.DownloadString(urlReniec);
+
+                    if (DataReniec != null && DataReniec != "null")
+                    {
+                        string[] desconcat = DataReniec.Split(',', ':');
+
+                        //txtNombres.Text = desconcat[3].Replace("\"", "").Trim();
+                        txtNombres.Text = desconcat[9].Replace("}", "").Replace("\"", "").Trim();
+                        txtApellidoPaterno.Text = desconcat[5].Replace("\"", "").Trim();
+                        txtApellidoMaterno.Text = desconcat[7].Replace("\"", "").Trim();
+                        txtNroDocumento.Text = desconcat[1].Replace("\"", "").Trim();
+                        _personId = null;
+                    }
+
+
+                }
                 int Correlativo = AgendaBl.GetNumeroHIstoriafinal();
                 lblHistoriaClinica.ForeColor = Color.Red;
-                lblHistoriaClinica.Text = (Correlativo + 1).ToString();  
-              
+                lblHistoriaClinica.Text = (Correlativo + 1).ToString();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(@"Nro. de DNI incorrecto", @"Información");
+                //throw;
             }
         }
 
@@ -447,6 +520,7 @@ namespace SAMBHS.Windows.WinClient.UI
             txtApellidoPaterno.Text = "";
             txtApellidoMaterno.Text = "";
             cboTipoDocumento.SelectedValue = 1;
+            cboNivelEstudio.SelectedValue = 1;
             txtNroDocumento.Text = "";
             cboGenero.SelectedValue = 1;
             dtpBirthdate.Value = DateTime.Now;
@@ -481,15 +555,15 @@ namespace SAMBHS.Windows.WinClient.UI
                 e.Handled = false;
             }
             else
-            if (Char.IsControl(e.KeyChar)) //permitir teclas de control como retroceso
-            {
-                e.Handled = false;
-            }
-            else
-            {
-                //el resto de teclas pulsadas se desactivan
-                e.Handled = true;
-            }
+                if (Char.IsControl(e.KeyChar)) //permitir teclas de control como retroceso
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    //el resto de teclas pulsadas se desactivan
+                    e.Handled = true;
+                }
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
                 btnBuscarTrabajador_Click(sender, e);
@@ -533,7 +607,7 @@ namespace SAMBHS.Windows.WinClient.UI
                 }
             }
 
-            
+
 
             GrabarTrabajadorNuevo();
             btnSavePacient.Enabled = false;
@@ -589,7 +663,7 @@ namespace SAMBHS.Windows.WinClient.UI
             oPersonDto.Altitud = 1;
             oPersonDto.Minerales = "---";
 
-            oPersonDto.Estudios = 1;
+            oPersonDto.Estudios = cboNivelEstudio.SelectedValue == null ? -1 : int.Parse(cboNivelEstudio.SelectedValue.ToString());
             oPersonDto.Grupo = 1;
             oPersonDto.Factor = -1;
             oPersonDto.TiempoResidencia = "---";
@@ -653,7 +727,7 @@ namespace SAMBHS.Windows.WinClient.UI
                 {
                     _personId = AgendaBl.InsertHistoryClinics(oHIstortClinic);
                 }
-                
+
             }
             else
             {
@@ -669,11 +743,11 @@ namespace SAMBHS.Windows.WinClient.UI
             }
             _sexTypeId = oPersonDto.GeneroId;
             _fechaNacimiento = oPersonDto.FechaNacimiento;
-            
+
 
             #endregion
 
-            
+
 
             #region Grabar en SAM
             clienteDto _clienteDto = new clienteDto();
@@ -685,7 +759,7 @@ namespace SAMBHS.Windows.WinClient.UI
             _clienteDto.v_ApePaterno = txtApellidoPaterno.Text;
             _clienteDto.v_ApeMaterno = txtApellidoMaterno.Text;
             _clienteDto.v_RazonSocial = string.Empty;
-            
+
             _clienteDto.i_UsaLineaCredito = 0;
             _clienteDto.v_NombreContacto = "";
             _clienteDto.v_NroDocIdentificacion = txtNroDocumento.Text.Trim();
@@ -699,7 +773,7 @@ namespace SAMBHS.Windows.WinClient.UI
             _clienteDto.i_IdPais = 51;
             _clienteDto.i_IdDistrito = cboDistrito.SelectedValue == null ? -1 : int.Parse(cboDistrito.SelectedValue.ToString());
             _clienteDto.i_IdDepartamento = int.Parse(cboDepartamento.SelectedValue.ToString());
-            _clienteDto.i_IdListaPrecios = -1 ;
+            _clienteDto.i_IdListaPrecios = -1;
             _clienteDto.i_IdProvincia = int.Parse(cboProvincia.SelectedValue.ToString());
             _clienteDto.t_FechaNacimiento = dtpBirthdate.Value;
             _clienteDto.i_Nacionalidad = 0;
@@ -707,7 +781,7 @@ namespace SAMBHS.Windows.WinClient.UI
             _clienteDto.i_IdSexo = int.Parse(cboGenero.SelectedValue.ToString());
             _clienteDto.i_IdGrupoCliente = 0;
             _clienteDto.i_IdZona = 0;
-           
+
             _clienteDto.v_FlagPantalla = "C";
 
             _clienteDto.v_NroCuentaDetraccion = "";
@@ -722,7 +796,7 @@ namespace SAMBHS.Windows.WinClient.UI
             // Save the data
             OperationResult objOperationResult = new OperationResult();
             InsertarCliente(ref objOperationResult, _clienteDto, Globals.ClientSession.GetAsList());
-            
+
 
             #endregion
             MessageBox.Show(@"Se grabó correctamente", @"Información");
@@ -765,7 +839,7 @@ namespace SAMBHS.Windows.WinClient.UI
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -781,8 +855,8 @@ namespace SAMBHS.Windows.WinClient.UI
 
             string replicationId = Globals.ClientSession != null ? Globals.ClientSession.ReplicationNodeID : "N";
             secuential objSecuential = (from a in dbContext.secuential
-                where a.i_TableId == pintTableId && a.i_NodeId == pintNodeId && a.v_ReplicationID == replicationId
-                select a).SingleOrDefault();
+                                        where a.i_TableId == pintTableId && a.i_NodeId == pintNodeId && a.v_ReplicationID == replicationId
+                                        select a).SingleOrDefault();
 
             // Actualizar el campo con el nuevo valor a efectos de reservar el ID autogenerado para evitar colisiones entre otros nodos
             if (objSecuential != null)
@@ -889,7 +963,7 @@ namespace SAMBHS.Windows.WinClient.UI
                     return;
                 }
             }
-            
+
 
             #endregion
 
@@ -900,7 +974,7 @@ namespace SAMBHS.Windows.WinClient.UI
                 if (v_descuentoId != "")
                 {
                     string v_descuentoName = GetNombreDescuento(v_descuentoId);
-                    MessageBox.Show(@"El paciente tiene un plan de descuento: \n "+v_descuentoName+" para el protocolo " , "CONFIRMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(@"El paciente tiene un plan de descuento: \n " + v_descuentoName + " para el protocolo ", "CONFIRMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     string protocolId = GetProtocolId(cboProtocolo.Text);
                     string v_descuentoDetalleId = GetDescuentoDetalle(v_descuentoId, protocolId);
                     GLobalv_descuentoDetalleId = v_descuentoDetalleId;
@@ -916,20 +990,31 @@ namespace SAMBHS.Windows.WinClient.UI
                 else
                 {
                     var ProtPerId = AgendarServicio(Globals.ClientSession.GetAsList());
-                    Close();
+                    var resp = MessageBox.Show("Se agendó correctamente.", "CONFIRMACIÓN", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    if (resp == DialogResult.OK)
+                    {
+                        this.Close();
+                    }
+                    else
+                    {
+                        this.Close();
+                    }
+
+                    //cierre = 1;
+                    //Close();
                 }
 
-                
+
             }
-            
+
         }
 
         private void InsertarHistoria(string PersonId, string ServiceId)
         {
             ConexionSigesoft conexionSigesoft = new ConexionSigesoft();
             var cadena1 = "";
-            SqlCommand comando ;
-            SqlDataReader lector ;
+            SqlCommand comando;
+            SqlDataReader lector;
             conexionSigesoft.opensigesoft();
             #region Obtener secuencial
             int hc = Obtenerhc(PersonId);
@@ -951,9 +1036,9 @@ namespace SAMBHS.Windows.WinClient.UI
                 lector.Close();
                 #endregion
             }
-            
+
             #endregion
-          
+
 
             #region Insertar HCDetalle
             cadena1 = "insert into historyclinicsdetail(v_nroHistoria, v_ServiceId) values(" + hc + ", '" + ServiceId + "' )";
@@ -967,7 +1052,7 @@ namespace SAMBHS.Windows.WinClient.UI
         {
             ConexionSigesoft conexionSigesoft = new ConexionSigesoft();
             conexionSigesoft.opensigesoft();
-            var cadena1 = "select v_nroHistoria from historyclinics where v_PersonId='"+PersonId+"'";
+            var cadena1 = "select v_nroHistoria from historyclinics where v_PersonId='" + PersonId + "'";
             SqlCommand comando = new SqlCommand(cadena1, connection: conexionSigesoft.conectarsigesoft);
             SqlDataReader lector = comando.ExecuteReader();
             int hc = 0;
@@ -1057,7 +1142,7 @@ namespace SAMBHS.Windows.WinClient.UI
             conexionSigesoft.closesigesoft();
             return v_descuentoId;
         }
-        
+
         #endregion
 
 
@@ -1088,7 +1173,7 @@ namespace SAMBHS.Windows.WinClient.UI
 
             return oServiceDto.ProtocolId + "|" + oServiceDto.PersonId + "|" + oServiceDto.ServiceId;
 
-            
+
         }
 
         private ServiceDto OServiceDto()
@@ -1125,14 +1210,14 @@ namespace SAMBHS.Windows.WinClient.UI
             {
                 AgendaBl.LlenarComboProtocolo_Seguros(cboProtocolo, int.Parse(cboTipoServicio.SelectedValue.ToString()), int.Parse(cboServicio.SelectedValue.ToString()), _empresa, _contrata);
             }
-            
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             int Correlativo = AgendaBl.GetNumeroHIstoriafinal();
 
-            lblHistoriaClinica.Text = (Correlativo + 1).ToString();        
+            lblHistoriaClinica.Text = (Correlativo + 1).ToString();
         }
     }
 }

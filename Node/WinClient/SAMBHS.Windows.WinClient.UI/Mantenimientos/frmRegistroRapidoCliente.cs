@@ -14,6 +14,8 @@ using SAMBHS.Common.Resource;
 using SAMBHS.Venta.BL;
 using System.Text.RegularExpressions;
 using Infragistics.Documents.Excel;
+using System.Net;
+using System.Configuration;
 
 namespace SAMBHS.Windows.WinClient.UI.Mantenimientos
 {
@@ -130,63 +132,102 @@ namespace SAMBHS.Windows.WinClient.UI.Mantenimientos
                 }
                 string[] _Contribuyente = new string[10];
 
-                frmCustomerCapchaSUNAT frm = new frmCustomerCapchaSUNAT(nroDoc);
-                frm.ShowDialog();
-                if (frm.ConectadoRecibido == true)
+                //frmCustomerCapchaSUNAT frm = new frmCustomerCapchaSUNAT(nroDoc);
+                //frm.ShowDialog();
+                //if (frm.ConectadoRecibido == true)
+                //{
+                //_Contribuyente = frm.DatosContribuyente;
+                System.Net.ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+                string ruta = GetApplicationConfigValue("tokenApisunat").ToString();
+                var urlReniec = "https://dniruc.apisperu.com/api/v1/ruc/" + txtNroDocumento.Text.Trim() + "?token=" + ruta;
+
+                System.Net.WebClient wcReniec = new System.Net.WebClient();
+                string DataReniec = wcReniec.DownloadString(urlReniec);
+                string[] Cadena = DataReniec.ToUpper().Trim().Split(new Char[] { ',', ':' }, StringSplitOptions.RemoveEmptyEntries);
+                if (txtNroDocumento.Text.StartsWith("1") && cboTipoPersona.Value.ToString() == "1")
                 {
-                    _Contribuyente = frm.DatosContribuyente;
 
-                    if (txtNroDocumento.Text.StartsWith("1") && cboTipoPersona.Value.ToString() == "1")
+
+                    //if (Cadena.GetUpperBound(0) == 1)
+                    //{
+                    string nombre = Cadena[3].Replace("\"", "");
+                    nombre = nombre.Replace("[", "");
+                    nombre = nombre.Replace("]", "");
+                    if (nombre.Split(' ').Count() > 3)
                     {
-                        string[] Cadena = _Contribuyente[0].ToUpper().Trim().Split(new Char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-                        if (Cadena.GetUpperBound(0) == 1)
-                        {
-                            txtApePaterno.Text = Cadena[0];
-                            txtApeMaterno.Text = Cadena[1];
-                            txtPrimerNombre.Text = Cadena[Cadena.Length - 1];
-                            txtSegundoNombre.Text = string.Empty;
-                        }
-
-                        if (Cadena.GetUpperBound(0) == 2)
-                        {
-                            txtApePaterno.Text = Cadena[0];
-                            txtApeMaterno.Text = Cadena[1];
-                            txtPrimerNombre.Text = Cadena[Cadena.Length - 1];
-                            txtSegundoNombre.Text = string.Empty;
-                        }
-
-                        if (Cadena.GetUpperBound(0) >= 3)
-                        {
-                            txtApePaterno.Text = Cadena[0];
-                            txtApeMaterno.Text = Cadena[1];
-                            txtPrimerNombre.Text = Cadena[Cadena.Length - 2];
-                            txtSegundoNombre.Text = Cadena[Cadena.Length - 1];
-                        }
+                        txtApePaterno.Text = nombre.Split(' ')[0];
+                        txtApeMaterno.Text = nombre.Split(' ')[1];
+                        txtPrimerNombre.Text = nombre.Split(' ')[2];
+                        txtSegundoNombre.Text = nombre.Split(' ')[3];
                     }
                     else
                     {
-                        txtPrimerNombre.Text = _Contribuyente[0].ToUpper().Trim();
+                        txtApePaterno.Text = nombre.Split(' ')[0];
+                        txtApeMaterno.Text = nombre.Split(' ')[1];
+                        txtPrimerNombre.Text = nombre.Split(' ')[2];
                         txtSegundoNombre.Text = string.Empty;
-                        txtApePaterno.Text = string.Empty;
-                        txtApeMaterno.Text = string.Empty;
                     }
-                    txtDireccion.Text = Regex.Replace(_Contribuyente[5], @"[ ]+", " ");
-                    var resultUbigueo = Utils.Ubigeo.GetUbigueo(txtDireccion.Text);
-                    if (resultUbigueo != null)
-                    {
-                        ddlDepartamento.Value = resultUbigueo[0].Key;
-                        ddlProvincia.Value = resultUbigueo[1].Key;
-                        ddlDistrito.Value = resultUbigueo[2].Key;
-                    }
-                    pbEstadoCondicion.Visible = true;
-                    pbEstadoCondicion.Image = _Contribuyente[3].Trim().ToUpper().Equals("ACTIVO") &&
-                                              _Contribuyente[4].Trim().ToUpper().Equals("HABIDO")
-                        ? Resource.accept
-                        : Resource.alerta;
-                    lblEstadoContribuyente.Text = string.Format("ESTADO: {0} | CONDICIÓN: {1}", _Contribuyente[3], _Contribuyente[4]);
-                    _clienteDto.v_TelefonoFijo = _Contribuyente[6];
+
+                    //}
+
+                    //if (Cadena.GetUpperBound(0) == 2)
+                    //{
+                    //    txtApePaterno.Text = Cadena[0];
+                    //    txtApeMaterno.Text = Cadena[1];
+                    //    txtPrimerNombre.Text = Cadena[Cadena.Length - 1];
+                    //    txtSegundoNombre.Text = string.Empty;
+                    //}
+
+                    //if (Cadena.GetUpperBound(0) >= 3)
+                    //{
+                    //    txtApePaterno.Text = Cadena[0];
+                    //    txtApeMaterno.Text = Cadena[1];
+                    //    txtPrimerNombre.Text = Cadena[Cadena.Length - 2];
+                    //    txtSegundoNombre.Text = Cadena[Cadena.Length - 1];
+                    //}
                 }
+                else
+                {
+                    string razonsocial = Cadena[3].Replace("\"", "");
+                    razonsocial = razonsocial.Replace("[", "");
+                    razonsocial = razonsocial.Replace("]", "");
+
+                    txtPrimerNombre.Text = razonsocial.ToUpper().Trim();
+                    txtSegundoNombre.Text = string.Empty;
+                    txtApePaterno.Text = string.Empty;
+                    txtApeMaterno.Text = string.Empty;
+                }
+                string direccion = Cadena[15].Replace("\"", "");
+
+                string departamento = Cadena[17].Replace("\"", "");
+                departamento = Regex.Replace(departamento, @"[ ]+", "");
+                string provincia = Cadena[19].Replace("\"", "");
+                provincia = Regex.Replace(provincia, @"[ ]+", "");
+                string distrito = Cadena[21].Replace("\"", "");
+                distrito = Regex.Replace(distrito, @"[ ]+", "");
+
+                var direccionConcatenada = direccion + " " + departamento + " - " + provincia + " - " + distrito;
+                txtDireccion.Text = direccionConcatenada;
+                var resultUbigueo = Utils.Ubigeo.GetUbigueo(direccionConcatenada);
+                if (resultUbigueo != null)
+                {
+                    ddlDepartamento.Value = resultUbigueo[0].Key;
+                    ddlProvincia.Value = resultUbigueo[1].Key;
+                    ddlDistrito.Value = resultUbigueo[2].Key;
+                }
+                pbEstadoCondicion.Visible = true;
+                string estado = Cadena[11].Replace("\"", "");
+                estado = Regex.Replace(estado, @"[ ]+", "");
+                string condicion = Cadena[13].Replace("\"", "");
+                condicion = Regex.Replace(condicion, @"[ ]+", "");
+
+                pbEstadoCondicion.Image = estado.Trim().ToUpper().Equals("ACTIVO") &&
+                                          condicion.Trim().ToUpper().Equals("HABIDO")
+                    ? Resource.accept
+                    : Resource.alerta;
+                lblEstadoContribuyente.Text = string.Format("ESTADO: {0} | CONDICIÓN: {1}", estado, condicion);
+                _clienteDto.v_TelefonoFijo = string.Empty;
+                //}
             }
 
             if (cboTipoDocumento.Value.ToString() == "1")
@@ -196,49 +237,126 @@ namespace SAMBHS.Windows.WinClient.UI.Mantenimientos
                     UltraMessageBox.Show("El DNI Ingresado es incorrecto", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                string[] _Persona = new string[3];
 
-                frmCustomerCapchaRENIEC frm = new frmCustomerCapchaRENIEC(nroDoc);
-                frm.ShowDialog();
-                if (frm.ConectadoRecibido == true)
+                try
                 {
-                    _Persona = frm.DatosPersona;
-                    if (_Persona != null)
+                    //ObtenerDatosDNI(txtSearchNroDocument.Text.Trim());
+                    var urlEssalud = "http://ww1.essalud.gob.pe/sisep/postulante/postulante/postulante_obtenerDatosPostulante.htm?strDni=" + nroDoc.Trim();
+
+                    WebClient wcEssalud = new WebClient();
+
+                    var DataEssalud = wcEssalud.DownloadString(urlEssalud);
+
+                    string validar = DataEssalud.Split(',', ':')[6].Replace("\"", "").Trim();
+                    string validar2 = DataEssalud.Split('>', ' ')[0].Replace("<", "").Trim();
+                    if ((validar != "" && validar != null) && validar2 != "html")
                     {
-                        string[] Cadena = (_Persona[0] + " " + _Persona[1] + " " + _Persona[2]).ToUpper().Trim().Split(new Char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                        string[] desconcat = DataEssalud.Split(',', ':');
 
-                        if (Cadena.GetUpperBound(0) == 1)
+                        //txtPrimerNombre.Text = desconcat[6].Replace("\"", "").Trim();
+                        string[] nombres = desconcat[6].Replace("\"", "").Trim().Split(' ');
+                        txtPrimerNombre.Text = nombres[0];
+                        if (nombres.Count() >= 1)
                         {
-                            txtApePaterno.Text = Cadena[0];
-                            txtApeMaterno.Text = Cadena[1];
-                            txtPrimerNombre.Text = Cadena[Cadena.Length - 1];
-                            txtSegundoNombre.Text = string.Empty;
+                            txtSegundoNombre.Text = nombres[1];
+                        }
+                        else
+                        {
+                            txtSegundoNombre.Text = "";
                         }
 
-                        if (Cadena.GetUpperBound(0) == 2)
-                        {
-                            txtApePaterno.Text = Cadena[0];
-                            txtApeMaterno.Text = Cadena[1];
-                            txtPrimerNombre.Text = Cadena[Cadena.Length - 1];
-                            txtSegundoNombre.Text = string.Empty;
-                        }
+                        txtApePaterno.Text = desconcat[4].Replace("\"", "").Trim();
 
-                        if (Cadena.GetUpperBound(0) >= 3)
-                        {
-                            txtApePaterno.Text = Cadena[0];
-                            txtApeMaterno.Text = Cadena[1];
-                            txtPrimerNombre.Text = Cadena[Cadena.Length - 2];
-                            txtSegundoNombre.Text = Cadena[Cadena.Length - 1];
-                        }
+                        txtApeMaterno.Text = desconcat[12].Replace("\"", "").Trim();
+                        txtApeMaterno.Text = txtApeMaterno.Text.Replace("}", "").Trim();
+                        txtApeMaterno.Text = txtApeMaterno.Text.Replace("]", "").Trim();
+
+                        txtNroDocumento.Text = desconcat[2].Replace("\"", "").Trim();
                     }
-                    txtDireccion.Clear();
-                    txtDireccion.Focus();
+                    else
+                    {
+                        //var urlReniec = "https ://dniruc.apisperu.com/api/v1/dni/" + nroDoc.Trim() + "?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImVkdWFyZG9xYzE4M0BvdXRsb29rLmNvbSJ9.RVuS2_RQEowXN8om3Wx7ifm0I2gl01ck5_vH4HlG5Nw";
+                        System.Net.ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+                        var urlReniec = "https://api.reniec.cloud/dni/" + nroDoc.Trim();
+
+                        System.Net.WebClient wcReniec = new System.Net.WebClient();
+                        string DataReniec = wcReniec.DownloadString(urlReniec);
+
+                        if (DataReniec != null && DataReniec != "null")
+                        {
+                            string[] desconcat = DataReniec.Split(',', ':');
+
+                            //string[] nombres = desconcat[3].Replace("\"", "").Trim().Split(' ');
+                            string[] nombres = desconcat[9].Replace("}", "").Trim().Split(' ');
+                            txtPrimerNombre.Text = nombres[0].Replace("\"", "").Trim();
+                            if (nombres.Count() >= 1)
+                            {
+                                txtSegundoNombre.Text = nombres[1].Replace("\"", "").Trim();
+                            }
+                            else
+                            {
+                                txtSegundoNombre.Text = "";
+                            }
+
+                            txtApePaterno.Text = desconcat[5].Replace("\"", "").Trim();
+                            txtApeMaterno.Text = desconcat[7].Replace("\"", "").Trim();
+                            txtNroDocumento.Text = desconcat[1].Replace("\"", "").Trim();
+                        }
+
+
+                    }
                 }
+                catch (Exception)
+                {
+                    MessageBox.Show(@"Nro. de DNI incorrecto", @"Información");
+                    //throw;
+                }
+                //string[] _Persona = new string[3];
+
+                //frmCustomerCapchaRENIEC frm = new frmCustomerCapchaRENIEC(nroDoc);
+                //frm.ShowDialog();
+                //if (frm.ConectadoRecibido == true)
+                //{
+                //    _Persona = frm.DatosPersona;
+                //    if (_Persona != null)
+                //    {
+                //        string[] Cadena = (_Persona[0] + " " + _Persona[1] + " " + _Persona[2]).ToUpper().Trim().Split(new Char[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                //        if (Cadena.GetUpperBound(0) == 1)
+                //        {
+                //            txtApePaterno.Text = Cadena[0];
+                //            txtApeMaterno.Text = Cadena[1];
+                //            txtPrimerNombre.Text = Cadena[Cadena.Length - 1];
+                //            txtSegundoNombre.Text = string.Empty;
+                //        }
+
+                //        if (Cadena.GetUpperBound(0) == 2)
+                //        {
+                //            txtApePaterno.Text = Cadena[0];
+                //            txtApeMaterno.Text = Cadena[1];
+                //            txtPrimerNombre.Text = Cadena[Cadena.Length - 1];
+                //            txtSegundoNombre.Text = string.Empty;
+                //        }
+
+                //        if (Cadena.GetUpperBound(0) >= 3)
+                //        {
+                //            txtApePaterno.Text = Cadena[0];
+                //            txtApeMaterno.Text = Cadena[1];
+                //            txtPrimerNombre.Text = Cadena[Cadena.Length - 2];
+                //            txtSegundoNombre.Text = Cadena[Cadena.Length - 1];
+                //        }
+                //    }
+                //    txtDireccion.Clear();
+                //    txtDireccion.Focus();
+                //}
             }
 
             button1.Focus();
         }
-
+        public static string GetApplicationConfigValue(string nombre)
+        {
+            return Convert.ToString(ConfigurationManager.AppSettings[nombre]);
+        }
         private void cboTipoDocumento_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cboTipoDocumento.Value != "-1")
